@@ -125,5 +125,5 @@ STATIC_URL = '/static/'
 #     'handling/templates/static/',
 #)
 
-# LOGIN_REDIRECT_URL = 'home'
-# LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'

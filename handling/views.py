@@ -8,7 +8,7 @@ from django.views.generic import CreateView
 from handling.models import Equipments,Apartments,NumberOfEquipment,Renters,Payments
 
 
-class Home(View):
+class Home(LoginRequiredMixin, View):
     def get(self,request):
         return render(request, 'base.html')
 
