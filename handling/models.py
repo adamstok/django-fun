@@ -30,6 +30,10 @@ class NumberOfEquipment(models.Model):
     equipment = models.ForeignKey(Equipments,on_delete=models.CASCADE)
     apartment = models.ForeignKey(Apartments,on_delete=models.CASCADE)
     equipments_number = models.IntegerField(default=1)
+    def __str__(self):
+        return f'Equipment: {self.equipment} ; Apartment: {self.apartment} ; Quantity: {self.equipments_number}'
+    def get_detail_url(self):
+        return f'/renters/{self.id}'
 
 
 class Renters(models.Model):
