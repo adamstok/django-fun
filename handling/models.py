@@ -29,7 +29,7 @@ class Apartments(models.Model):
 class NumberOfEquipment(models.Model):
     equipment = models.ForeignKey(Equipments,on_delete=models.CASCADE)
     apartment = models.ForeignKey(Apartments,on_delete=models.CASCADE)
-    equipments_number = models.IntegerField()
+    equipments_number = models.IntegerField(default=1)
 
 
 class Renters(models.Model):
