@@ -1,5 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render
+from handling.forms import RenterSearchForm
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -59,6 +61,18 @@ class CreateRentersView(CreateView):
         context = super().get_context_data(**kwargs)
         context.update({'objects':Renters.objects.all()})
         return context
+
+    # def search_renters(self,request):
+    #     search_form = RenterSearchForm(request.GET)
+    #     search_form.is_valid()
+    #     first_name = search_form.cleaned_data.get('query', "")
+    #     last_name = search_form.cleaned_data.get('query', "")
+    #     apartment = search_form.cleaned_data.get('query', "")
+    #     q1 = Q(first_name__icontains=first_name)
+    #     q2 = Q(last_name__icontains=last_name)
+    #     q3 = Q(apartment__icontains=apartment)
+    #     renters = Renters.objects.filter(q1 | q2 | q3)
+    #     return renters, search_form
 
 class CreatePaymentsView(CreateView):
     model = Payments
