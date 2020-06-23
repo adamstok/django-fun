@@ -6,25 +6,15 @@ from handling.forms import RenterSearchForm
 # Create your views here.
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from handling.models import Apartments,Renters,Payments
+from handling.forms import ApartmentsForm
 
 
 class Home(LoginRequiredMixin, View):
     def get(self,request):
         return render(request, 'base.html')
 
-
-# class CreateEquipmentsView(CreateView):
-#     model = Equipments
-#     template_name = 'obj_list.html'
-#     success_url = reverse_lazy('equipments')
-#     fields = ['description']
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context.update({'objects':Equipments.objects.all()})
-#         return context
 
 
 class CreateApartmentsView(CreateView):
@@ -39,17 +29,65 @@ class CreateApartmentsView(CreateView):
         return context
 
 
-# class CreateNumberOfEquipmentView(CreateView):
-#     model = NumberOfEquipment
-#     template_name = 'obj_list.html'
-#     success_url = reverse_lazy('noe')
-#     fields = ['equipment','apartment','equipments_number']
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context.update({'objects':NumberOfEquipment.objects.all()})
-#         return context
-#
+class ApartmentDetailView(View):
+    def get(self,request,pk):
+        apartment = Apartments.objects.get(pk=pk)
+        apartments = Apartments.objects.all()
+        #form = ApartmentsForm(instance=apartment)
+        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments})
+    # def post(self,request,id):
+    #     apartment = Apartments.objects.get(pk=id)
+    #     apartments = Apartments.objects.all()
+    #     form = ApartmentsForm(request.POST,instance=apartment)
+    #     if form.is_valid():
+    #         form.save()
+    #         return render(request, 'base.html', {'form': form, 'details': True,'poprawnosc':'Poprawnie zmieniono dane'})
+    #     return render(request, 'base.html', {'form': form, 'details': True, 'poprawnosc': 'Błąd'})
+
+
+class ApartmentEditView(UpdateView):
+    model = Apartments
+    template_name = 'edit.html'
+    fields = ['name','address','equipment','description']
+
+    def get_success_url(self):
+        apartmentid = self.kwargs['pk']
+        return reverse_lazy('apartmentdetail',kwargs={'pk':apartmentid})
+
+
+
+class RenterDetailView(View):
+    def get(self,request,pk):
+        renter = Renters.objects.get(pk=pk)
+        renters = Renters.objects.all()
+        #form = ApartmentsForm(instance=apartment)
+        return render(request,'details.html',{'object':renter,'rent':True,'objects':renters})
+
+class RenterEditView(UpdateView):
+    model = Renters
+    template_name = 'edit.html'
+    fields = ['first_name','last_name','apartment']
+
+    def get_success_url(self):
+        renterid = self.kwargs['pk']
+        return reverse_lazy('renterdetail',kwargs={'pk':renterid})
+
+class PaymentDetailView(View):
+    def get(self,request,pk):
+        payment = Payments.objects.get(pk=pk)
+        payments = Payments.objects.all()
+        #form = ApartmentsForm(instance=apartment)
+        return render(request,'details.html',{'object':payment,'pay':True,'objects':payments})
+
+class PaymentEditView(UpdateView):
+    model = Payments
+    template_name = 'edit.html'
+    fields = ['date','amount','renter','apartment']
+
+    def get_success_url(self):
+        paymentid = self.kwargs['pk']
+        return reverse_lazy('paymentdetail',kwargs={'pk':paymentid})
+
 
 class CreateRentersView(CreateView):
     model = Renters
