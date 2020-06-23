@@ -110,19 +110,32 @@ class PaymentDeleteView(View):
 class SearchDatas(View):
     def get(self,request):
         search_form = SearchForm
-        ap = Apartments.objects.all()
-        ren = Renters.objects.all()
-        pay = Payments.objects.all()
-        context = {'search_form':search_form, 'objects_apartments':ap,'objects_renters':ren,'objects_payments':pay}
+        aparts,rent,pay= self.search(request)
+        context = {'search_form':search_form, 'objects_apartments':aparts,'objects_renters':rent,'objects_payments':pay}
         return render(request,'search.html',context)
-
-        # search_form = RenterSearchForm(request.GET)
-        # search_form.is_valid()
-        # first_name = search_form.cleaned_data.get('query', "")
-        # last_name = search_form.cleaned_data.get('query', "")
-        # apartment = search_form.cleaned_data.get('query', "")
-        # q1 = Q(first_name__icontains=first_name)
-        # q2 = Q(last_name__icontains=last_name)
-        # q3 = Q(apartment__icontains=apartment)
-        # renters = Renters.objects.filter(q1 | q2 | q3)
-        # return renters, search_form
+    
+    def search(self,request):
+        search_form = SearchForm(request.GET)
+        search_form.is_valid()
+        a_name = search_form.cleaned_data.get('query', "")
+        a_address = search_form.cleaned_data.get('query', "")
+        a_equipment = search_form.cleaned_data.get('query', "")
+        a_description = search_form.cleaned_data.get('query', "")
+        a1 = Q(name__icontains=a_name)
+        a2 = Q(address__icontains=a_address)
+        a3 = Q(equipment__icontains=a_equipment)
+        a4 = Q(description__icontains=a_description)
+        aparts = Apartments.objects.filter(a1 | a2 | a3 | a4)
+        r_first = search_form.cleaned_data.get('query', "")
+        r_last = search_form.cleaned_data.get('query', "")
+        r_apart = search_form.cleaned_data.get('query', "")
+        r1 = Q(first_name__icontains=r_first)
+        r2 = Q(last_name__icontains=r_last)
+        rent = Renters.objects.filter(r1 | r2 )
+        p_date = search_form.cleaned_data.get('query', "")
+        p_amount = search_form.cleaned_data.get('query', "")
+        p1 = Q(date__icontains=p_date)
+        p2 = Q(amount__icontains=p_amount)
+        pay = Payments.objects.filter(p1 | p2 )
+        return aparts,rent,pay
+        
