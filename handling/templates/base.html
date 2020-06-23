@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {% load static %}
+    <script src="{% static 'handling/js/change.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'handling/css/bootstrap.css' %}">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+{% if user.is_authenticated %}
+<body>
+
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="/">Home</a></li>
+  <li role="presentation"><a href="{% url 'apartments' %}">Apartments</a></li>
+  <li role="presentation"><a href="{% url 'renters' %}">Renters</a></li>
+  <li role="presentation"><a href="{% url 'payments' %}">Payments</a></li>
+  <li role="presentation"><a href="{% url 'search' %}">Search</a></li>
+  <li role="presentation"><a href="{% url 'logout' %}">Logout</a></li>
+</ul>
+
+
+    {% block content %}
+    {% endblock %}
+
+
+
+</body>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+</html>

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h3> Search </h3><br><br>
+    <form class="form-horizontal" method="GET" >
+    {{ search_form.as_p }}
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Go</button>
+      </div>
+    </div>
+</form>
+
+
+{% if objects_apartments %}
+<h3>Apartments list:</h3>
+<ul>
+{% for object in objects_apartments %}
+    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>
+{% endfor %}
+</ul>
+{% endif %}
+
+
+
+{% if objects_renters %}
+<h3>Renters list:</h3>
+<ul>
+{% for object in objects_renters %}
+    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>
+{% endfor %}
+</ul>
+{% endif %}
+
+
+
+{% if objects_payments %}
+<h3>Payments list:</h3>
+<ul>
+{% for object in objects_payments %}
+    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>
+{% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

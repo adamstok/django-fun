@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+{{ komunikat }}<br><br><br>
+
+<div class="form-group">
+<form class="form-horizontal" method="POST" >
+  {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Add</button>
+      </div>
+    </div>
+</form>
+</div>
+<br>
+
+
+
+{% if objects %}
+<h3>List:</h3>
+<ul>
+{% for object in objects %}
+    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>
+{% endfor %}
+</ul>
+{% endif %}
+
+
+{% endblock %}

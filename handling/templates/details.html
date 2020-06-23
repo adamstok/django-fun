@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<br><br><br>
+{% if apart %}
+    <h3>Apartment: </h3>
+    <p>Name: {{ object.name }}</p>
+    <p>Address: {{ object.address }}</p>
+    <p>Equipments: {{ object.equipment }} </p>
+    <p>Description: {{ object.description }}</p>
+<form class="form-horizontal" >
+  {% csrf_token %}
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default" name="usun"><a href="{{ object.get_delete }}">Delete</a></button>
+        <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edit</a></button>
+      </div>
+    </div>
+</form>
+{% endif %}
+
+
+
+{% if rent %}
+    <h3>Renter: </h3>
+    <p>First name: {{ object.first_name }}</p>
+    <p>Last name: {{ object.last_name }}</p>
+    <p>Apartment: {{ object.apartment }} </p>
+<form class="form-horizontal" >
+  {% csrf_token %}
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default" name="usun"><a href="{{ object.get_delete }}">Delete</a></button>
+        <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edit</a></button>
+      </div>
+    </div>
+</form>
+{% endif %}
+
+
+
+{% if pay %}
+    <h3>Payment: </h3>
+    <p>Date: {{ object.date }}</p>
+    <p>Amount: {{ object.amount }}</p>
+    <p>Renter: {{ object.renter }} </p>
+    <p>Apartment: {{ object.apartment }} </p>
+
+
+<form class="form-horizontal" >
+  {% csrf_token %}
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default" name="usun"><a href="{{ object.get_delete }}">Delete</a></button>
+        <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edit</a></button>
+      </div>
+    </div>
+</form>
+<br>
+{% endif %}
+
+
+
+
+<br><br>
+{% if objects %}
+<h3>List:</h3>
+<ul>
+{% for object in objects %}
+    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>
+{% endfor %}
+</ul>
+{% endif %}
+
+
+
+{% endblock %}
