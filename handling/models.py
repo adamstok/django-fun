@@ -38,7 +38,7 @@ class Renters(models.Model):
         return f'/renters/delete/{self.id}'
 
 class Payments(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
     amount = models.DecimalField(max_digits=8, decimal_places=3)
     renter = models.ForeignKey(Renters, on_delete=models.CASCADE)
     apartment = models.ForeignKey(Apartments,on_delete=models.CASCADE)
