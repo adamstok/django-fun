@@ -3,7 +3,7 @@ from django.forms import Form
 from handling.models import Apartments
 
 
-class RenterSearchForm(forms.Form):
+class SearchForm(forms.Form):
     query = forms.CharField(required=False)
 
 class ApartmentsForm(forms.ModelForm):

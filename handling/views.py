@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render
-from handling.forms import RenterSearchForm
+from handling.forms import SearchForm
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -107,15 +107,22 @@ class PaymentDeleteView(View):
 
 
 
+class SearchDatas(View):
+    def get(self,request):
+        search_form = SearchForm
+        ap = Apartments.objects.all()
+        ren = Renters.objects.all()
+        pay = Payments.objects.all()
+        context = {'search_form':search_form, 'objects_apartments':ap,'objects_renters':ren,'objects_payments':pay}
+        return render(request,'search.html',context)
 
-    # def search_renters(self,request):
-    #     search_form = RenterSearchForm(request.GET)
-    #     search_form.is_valid()
-    #     first_name = search_form.cleaned_data.get('query', "")
-    #     last_name = search_form.cleaned_data.get('query', "")
-    #     apartment = search_form.cleaned_data.get('query', "")
-    #     q1 = Q(first_name__icontains=first_name)
-    #     q2 = Q(last_name__icontains=last_name)
-    #     q3 = Q(apartment__icontains=apartment)
-    #     renters = Renters.objects.filter(q1 | q2 | q3)
-    #     return renters, search_form
+        # search_form = RenterSearchForm(request.GET)
+        # search_form.is_valid()
+        # first_name = search_form.cleaned_data.get('query', "")
+        # last_name = search_form.cleaned_data.get('query', "")
+        # apartment = search_form.cleaned_data.get('query', "")
+        # q1 = Q(first_name__icontains=first_name)
+        # q2 = Q(last_name__icontains=last_name)
+        # q3 = Q(apartment__icontains=apartment)
+        # renters = Renters.objects.filter(q1 | q2 | q3)
+        # return renters, search_form

@@ -35,5 +35,6 @@ urlpatterns = [
     path('payments/<int:pk>', views.PaymentDetailView.as_view(), name='paymentdetail'),
     path('payments/edit/<int:pk>/', views.PaymentEditView.as_view(), name='paymentedit'),
     path('payments/delete/<int:pk>/', views.PaymentDeleteView.as_view(), name='paymentdelete'),
+    path('search/', views.SearchDatas.as_view(),name='search'),
 
 ]

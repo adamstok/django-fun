@@ -8,8 +8,6 @@ from django.contrib.auth.models import User
 class Apartments(models.Model):
     name = models.CharField(max_length=250)
     address = models.CharField(max_length=250)
-    # rented = models.BooleanField(default=False)
-    #equipment = models.ManyToManyField(Equipments, through='NumberOfEquipment')
     equipment = models.TextField()
     description = models.TextField()
 
