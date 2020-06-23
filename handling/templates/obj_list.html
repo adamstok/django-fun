@@ -4,6 +4,7 @@
 
 {{ komunikat }}<br><br><br>
 
+<div class="form-group">
 <form class="form-horizontal" method="POST" >
   {% csrf_token %}
     {{ form.as_p }}
@@ -14,6 +15,7 @@
       </div>
     </div>
 </form>
+</div>
 <br>
 
 

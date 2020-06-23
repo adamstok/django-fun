@@ -1,8 +1,7 @@
-
 document.addEventListener('DOMContentLoaded',function (e) {
     inputs = document.getElementsByTagName('input')
     buttons = document.getElementsByTagName('button')
-
+    console.log(inputs)
     for(let x=0;x<inputs.length;x++){
         inputs[x].setAttribute('class',"form-control")
     }

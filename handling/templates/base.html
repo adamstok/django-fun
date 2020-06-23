@@ -3,7 +3,8 @@
 <head>
 
     {% load static %}
-    <script src="{% static 'change.js' %}"></script>
+    <script src="{% static 'handling/js/change.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'handling/css/bootstrap.css' %}">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <!-- Optional theme -->
@@ -23,6 +24,7 @@
   <li role="presentation"><a href="{% url 'search' %}">Search</a></li>
   <li role="presentation"><a href="{% url 'logout' %}">Logout</a></li>
 </ul>
+
 
     {% block content %}
     {% endblock %}
