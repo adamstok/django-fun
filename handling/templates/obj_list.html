@@ -2,9 +2,6 @@
 {% block content %}
 
 
-
-
-
 {{ komunikat }}<br><br><br>
 
 <form class="form-horizontal" method="POST" >
@@ -13,7 +10,7 @@
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default">Dodaj</button>
+        <button type="submit" class="btn btn-default">Add</button>
       </div>
     </div>
 </form>
@@ -21,36 +18,14 @@
 
 
 
-
-{#<h3> Wyszukiwanie </h3>#}
-{#    <form class="form-horizontal" method="GET" >#}
-{#    {{ search_form.as_p }}#}
-{##}
-{#    <div class="form-group">#}
-{#      <div class="col-sm-offset-2 col-sm-10">#}
-{#        <button type="submit" class="btn btn-default">Szukaj</button>#}
-{#      </div>#}
-{#    </div>#}
-{#</form>#}
-
 {% if objects %}
-<h3>Lista:</h3>
+<h3>List:</h3>
 <ul>
 {% for object in objects %}
     <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>
-{#    <a href="{{ object.delete_it }}"><button>Delete</button></a>#}
 {% endfor %}
 </ul>
 {% endif %}
 
-
-{#<ul>#}
-{#{% for object in objects2 %}#}
-{#    {% if object.amount >= 10 %}#}
-{#    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>#}
-{#    <a href="{{ object.delete_it }}"><button>Delete</button></a>#}
-{#    {% endif %}#}
-{#{% endfor %}#}
-{#</ul>#}
 
 {% endblock %}

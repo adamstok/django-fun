@@ -17,76 +17,35 @@ class Home(LoginRequiredMixin, View):
 
 
 
+
 class CreateApartmentsView(CreateView):
     model = Apartments
     template_name = 'obj_list.html'
     success_url = reverse_lazy('apartments')
     fields = ['name','address','equipment','description']
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({'objects':Apartments.objects.all()})
         return context
-
-
 class ApartmentDetailView(View):
     def get(self,request,pk):
         apartment = Apartments.objects.get(pk=pk)
         apartments = Apartments.objects.all()
-        #form = ApartmentsForm(instance=apartment)
         return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments})
-    # def post(self,request,id):
-    #     apartment = Apartments.objects.get(pk=id)
-    #     apartments = Apartments.objects.all()
-    #     form = ApartmentsForm(request.POST,instance=apartment)
-    #     if form.is_valid():
-    #         form.save()
-    #         return render(request, 'base.html', {'form': form, 'details': True,'poprawnosc':'Poprawnie zmieniono dane'})
-    #     return render(request, 'base.html', {'form': form, 'details': True, 'poprawnosc': 'Błąd'})
-
-
 class ApartmentEditView(UpdateView):
     model = Apartments
     template_name = 'edit.html'
     fields = ['name','address','equipment','description']
-
     def get_success_url(self):
         apartmentid = self.kwargs['pk']
         return reverse_lazy('apartmentdetail',kwargs={'pk':apartmentid})
-
-
-
-class RenterDetailView(View):
+class ApartmentDeleteView(View):
     def get(self,request,pk):
-        renter = Renters.objects.get(pk=pk)
-        renters = Renters.objects.all()
-        #form = ApartmentsForm(instance=apartment)
-        return render(request,'details.html',{'object':renter,'rent':True,'objects':renters})
+        apart = Apartments.objects.get(pk=pk)
+        apart.delete()
+        return render(request,'edit.html',{'komunikat':'Datas have been deleted properly.'})
 
-class RenterEditView(UpdateView):
-    model = Renters
-    template_name = 'edit.html'
-    fields = ['first_name','last_name','apartment']
 
-    def get_success_url(self):
-        renterid = self.kwargs['pk']
-        return reverse_lazy('renterdetail',kwargs={'pk':renterid})
-
-class PaymentDetailView(View):
-    def get(self,request,pk):
-        payment = Payments.objects.get(pk=pk)
-        payments = Payments.objects.all()
-        #form = ApartmentsForm(instance=apartment)
-        return render(request,'details.html',{'object':payment,'pay':True,'objects':payments})
-
-class PaymentEditView(UpdateView):
-    model = Payments
-    template_name = 'edit.html'
-    fields = ['date','amount','renter','apartment']
-
-    def get_success_url(self):
-        paymentid = self.kwargs['pk']
-        return reverse_lazy('paymentdetail',kwargs={'pk':paymentid})
 
 
 class CreateRentersView(CreateView):
@@ -94,11 +53,60 @@ class CreateRentersView(CreateView):
     template_name = 'obj_list.html'
     success_url = reverse_lazy('renters')
     fields = ['first_name','last_name','apartment']
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({'objects':Renters.objects.all()})
         return context
+class RenterDetailView(View):
+    def get(self,request,pk):
+        renter = Renters.objects.get(pk=pk)
+        renters = Renters.objects.all()
+        return render(request,'details.html',{'object':renter,'rent':True,'objects':renters})
+class RenterEditView(UpdateView):
+    model = Renters
+    template_name = 'edit.html'
+    fields = ['first_name','last_name','apartment']
+    def get_success_url(self):
+        renterid = self.kwargs['pk']
+        return reverse_lazy('renterdetail',kwargs={'pk':renterid})
+class RenterDeleteView(View):
+    def get(self,request,pk):
+        renter = Renters.objects.get(pk=pk)
+        renter.delete()
+        return render(request,'edit.html',{'komunikat':'Datas have been deleted properly.'})
+
+
+
+class CreatePaymentsView(CreateView):
+    model = Payments
+    template_name = 'obj_list.html'
+    success_url = reverse_lazy('payments')
+    fields = ['date','amount','renter','apartment']
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'objects':Payments.objects.all()})
+        return context
+class PaymentDetailView(View):
+    def get(self,request,pk):
+        payment = Payments.objects.get(pk=pk)
+        payments = Payments.objects.all()
+        return render(request,'details.html',{'object':payment,'pay':True,'objects':payments})
+class PaymentEditView(UpdateView):
+    model = Payments
+    template_name = 'edit.html'
+    fields = ['date','amount','renter','apartment']
+    def get_success_url(self):
+        paymentid = self.kwargs['pk']
+        return reverse_lazy('paymentdetail',kwargs={'pk':paymentid})
+class PaymentDeleteView(View):
+    def get(self, request, pk):
+        pay = Payments.objects.get(pk=pk)
+        pay.delete()
+        return render(request, 'edit.html', {'komunikat': 'Datas have been deleted properly.'})
+
+
+
+
 
     # def search_renters(self,request):
     #     search_form = RenterSearchForm(request.GET)
@@ -111,15 +119,3 @@ class CreateRentersView(CreateView):
     #     q3 = Q(apartment__icontains=apartment)
     #     renters = Renters.objects.filter(q1 | q2 | q3)
     #     return renters, search_form
-
-class CreatePaymentsView(CreateView):
-    model = Payments
-    template_name = 'obj_list.html'
-    success_url = reverse_lazy('payments')
-    fields = ['date','amount','renter','apartment']
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({'objects':Payments.objects.all()})
-        return context
-

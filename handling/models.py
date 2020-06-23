@@ -19,6 +19,8 @@ class Apartments(models.Model):
         return f'/apartments/{self.id}'
     def get_edit(self):
         return f'/apartments/edit/{self.id}'
+    def get_delete(self):
+        return f'/apartments/delete/{self.id}'
 
 
 
@@ -34,6 +36,8 @@ class Renters(models.Model):
         return f'/renters/{self.id}'
     def get_edit(self):
         return f'/renters/edit/{self.id}'
+    def get_delete(self):
+        return f'/renters/delete/{self.id}'
 
 class Payments(models.Model):
     date = models.DateTimeField()
@@ -47,5 +51,7 @@ class Payments(models.Model):
         return f'/payments/{self.id}'
     def get_edit(self):
         return f'/payments/edit/{self.id}'
+    def get_delete(self):
+        return f'/payments/delete/{self.id}'
 
 

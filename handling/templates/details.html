@@ -13,8 +13,8 @@
   {% csrf_token %}
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default" name="usun">Usuń</button>
-        <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edytuj</a></button>
+        <button type="submit" class="btn btn-default" name="usun"><a href="{{ object.get_delete }}">Delete</a></button>
+        <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edit</a></button>
       </div>
     </div>
 </form>
@@ -31,8 +31,8 @@
   {% csrf_token %}
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default" name="usun">Usuń</button>
-        <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edytuj</a></button>
+        <button type="submit" class="btn btn-default" name="usun"><a href="{{ object.get_delete }}">Delete</a></button>
+        <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edit</a></button>
       </div>
     </div>
 </form>
@@ -52,8 +52,8 @@
   {% csrf_token %}
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default" name="usun">Usuń</button>
-        <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edytuj</a></button>
+        <button type="submit" class="btn btn-default" name="usun"><a href="{{ object.get_delete }}">Delete</a></button>
+        <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edit</a></button>
       </div>
     </div>
 </form>
@@ -65,7 +65,7 @@
 
 <br><br>
 {% if objects %}
-<h3>Lista:</h3>
+<h3>List:</h3>
 <ul>
 {% for object in objects %}
     <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>
