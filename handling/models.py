@@ -4,20 +4,21 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Equipments(models.Model):
-    description = models.TextField()
-
-    def __str__(self):
-        return f'Description: {self.description}'
-    def get_detail_url(self):
-        return f'/equipements/{self.id}'
+# class Equipments(models.Model):
+#     description = models.TextField()
+#
+#     def __str__(self):
+#         return f'Description: {self.description}'
+#     def get_detail_url(self):
+#         return f'/equipements/{self.id}'
 
 
 class Apartments(models.Model):
     name = models.CharField(max_length=250)
     address = models.CharField(max_length=250)
     rented = models.BooleanField()
-    equipment = models.ManyToManyField(Equipments, through='NumberOfEquipment')
+    #equipment = models.ManyToManyField(Equipments, through='NumberOfEquipment')
+    equipment = models.TextField()
     description = models.TextField()
 
     def __str__(self):
@@ -26,14 +27,14 @@ class Apartments(models.Model):
         return f'/apartments/{self.id}'
 
 
-class NumberOfEquipment(models.Model):
-    equipment = models.ForeignKey(Equipments,on_delete=models.CASCADE)
-    apartment = models.ForeignKey(Apartments,on_delete=models.CASCADE)
-    equipments_number = models.IntegerField(default=1)
-    def __str__(self):
-        return f'Equipment: {self.equipment} ; Apartment: {self.apartment} ; Quantity: {self.equipments_number}'
-    def get_detail_url(self):
-        return f'/renters/{self.id}'
+# class NumberOfEquipment(models.Model):
+#     equipment = models.ForeignKey(Equipments,on_delete=models.CASCADE)
+#     apartment = models.ForeignKey(Apartments,on_delete=models.CASCADE)
+#     equipments_number = models.IntegerField(default=1)
+#     def __str__(self):
+#         return f'Equipment: {self.equipment} ; Apartment: {self.apartment} ; Quantity: {self.equipments_number}'
+#     def get_detail_url(self):
+#         return f'/renters/{self.id}'
 
 
 class Renters(models.Model):

@@ -23,9 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('django.contrib.auth.urls')),
     path('', views.Home.as_view(), name='home'),
-    path('equipments/', views.CreateEquipmentsView.as_view(), name='equipments'),
+    # path('equipments/', views.CreateEquipmentsView.as_view(), name='equipments'),
     path('apartments/', views.CreateApartmentsView.as_view(), name='apartments'),
-    path('noe/', views.CreateNumberOfEquipmentView.as_view(), name='noe'),
+    # path('noe/', views.CreateNumberOfEquipmentView.as_view(), name='noe'),
     path('renters/', views.CreateRentersView.as_view(), name='renters'),
     path('payments/', views.CreatePaymentsView.as_view(), name='payments'),
 ]

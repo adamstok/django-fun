@@ -7,7 +7,7 @@ from handling.forms import RenterSearchForm
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView
-from handling.models import Equipments,Apartments,NumberOfEquipment,Renters,Payments
+from handling.models import Apartments,Renters,Payments
 
 
 class Home(LoginRequiredMixin, View):
@@ -15,23 +15,23 @@ class Home(LoginRequiredMixin, View):
         return render(request, 'base.html')
 
 
-class CreateEquipmentsView(CreateView):
-    model = Equipments
-    template_name = 'obj_list.html'
-    success_url = reverse_lazy('equipments')
-    fields = ['description']
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({'objects':Equipments.objects.all()})
-        return context
+# class CreateEquipmentsView(CreateView):
+#     model = Equipments
+#     template_name = 'obj_list.html'
+#     success_url = reverse_lazy('equipments')
+#     fields = ['description']
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context.update({'objects':Equipments.objects.all()})
+#         return context
 
 
 class CreateApartmentsView(CreateView):
     model = Apartments
     template_name = 'obj_list.html'
     success_url = reverse_lazy('apartments')
-    fields = ['name','address','rented','equipment','description']
+    fields = ['name','address','equipment','description']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,17 +39,17 @@ class CreateApartmentsView(CreateView):
         return context
 
 
-class CreateNumberOfEquipmentView(CreateView):
-    model = NumberOfEquipment
-    template_name = 'obj_list.html'
-    success_url = reverse_lazy('noe')
-    fields = ['equipment','apartment','equipments_number']
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({'objects':NumberOfEquipment.objects.all()})
-        return context
-
+# class CreateNumberOfEquipmentView(CreateView):
+#     model = NumberOfEquipment
+#     template_name = 'obj_list.html'
+#     success_url = reverse_lazy('noe')
+#     fields = ['equipment','apartment','equipments_number']
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context.update({'objects':NumberOfEquipment.objects.all()})
+#         return context
+#
 
 class CreateRentersView(CreateView):
     model = Renters
