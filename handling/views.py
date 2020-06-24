@@ -143,15 +143,17 @@ class SearchDatas(LoginRequiredMixin,View):
 
 class UploadPic(View):
     def get(self,request):
+        pics = ApartmentsPics.objects.all()
         form = ImageUploadForm1()
-        return render(request,'upload.html',{'form':form})
+        return render(request,'upload.html',{'form':form,'objects':pics})
 
     def post(self,request):
+        pics = ApartmentsPics.objects.all()
         form = ImageUploadForm1(request.POST, request.FILES)
         if form.is_valid():
             pic = form.cleaned_data['image']
             ap = form.cleaned_data['apartment']
             im1 = ApartmentsPics.objects.create(pics=pic,apartment=ap)
             im1.save()
-            return render(request,'upload.html',{'komunikat':'image upload success','form':form})
-        return render(request, 'upload.html', {'komunikat': 'Error', 'form': form})
+            return render(request,'upload.html',{'komunikat':'image upload success','form':form,'objects':pics})
+        return render(request, 'upload.html', {'komunikat': 'Error', 'form': form,'objects':pics})

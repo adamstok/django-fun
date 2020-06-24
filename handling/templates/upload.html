@@ -17,11 +17,17 @@
 <br>
 {% endif %}
 
-{#<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">{% csrf_token %}#}
-{#    <p>#}
-{#        <input id="id_image" type="file" class="" name="image">#}
-{#    </p>#}
-{#     <button type="submit" class="btn btn-default">Submit</button>#}
-{#</form>#}
 
+<br><br>
+{% if objects %}
+
+<h3>Pics:</h3>
+<ul>
+{% for object in objects %}
+    <img src="{{ object.pics.url }}" alt=""/>
+{% endfor %}
+</ul>
+{% endif %}
+
+{##}
 {% endblock %}

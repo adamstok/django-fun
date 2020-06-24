@@ -60,3 +60,5 @@ class ExamplePic(models.Model):
 class ApartmentsPics(models.Model):
     pics = models.ImageField(upload_to='pic_folder/',default='pic_folder/None/no-img.jpg')
     apartment = models.ForeignKey(Apartments,on_delete=models.CASCADE)
+    # def __str__(self):
+    #     return f'{self.pics}'
