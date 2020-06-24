@@ -35,7 +35,8 @@ class ApartmentDetailView(LoginRequiredMixin,View):
         apartments = Apartments.objects.all()
         pics = ApartmentsPics.objects.filter(apartment=apartment)
         payments = Payments.objects.filter(apartment=apartment)
-        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments,'pics':pics,'payments':payments})
+        rooms = ApartmentsRooms.objects.filter(apartments=apartment)
+        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments,'pics':pics,'payments':payments,'rooms':rooms})
 class ApartmentEditView(LoginRequiredMixin,UpdateView):
     model = Apartments
     template_name = 'edit.html'
