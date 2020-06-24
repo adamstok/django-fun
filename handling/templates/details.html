@@ -9,7 +9,16 @@
     <p>Address: {{ object.address }}</p>
     <p>Equipments: {{ object.equipment }} </p>
     <p>Description: {{ object.description }}</p>
-<form class="form-horizontal" >
+    {% if payments %}
+    <p>Payments: </p>
+    <ul>
+    {% for payment in payments %}
+        <a href="{{ payment.get_detail_url }}"> <li class="{{ class }}"> {{ payment }}</li></a>
+    {% endfor %}
+    </ul>
+    {% endif %}
+{#    {% if pics %}#}
+    <form class="form-horizontal" >
   {% csrf_token %}
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
@@ -17,8 +26,28 @@
         <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edit</a></button>
       </div>
     </div>
-</form>
+    </form>
+    {% if pics %}
+    <p>Pictures: </p>
+    <ul>
+    {% for pic in pics %}
+        <img src="{{ pic.pics.url }}" alt=""/>
+        <button><a href="{{ pic.get_delete }}">Delete pic</a></button>
+    {% endfor %}
+    </ul>
+    {% endif %}
 {% endif %}
+
+{#<form class="form-horizontal" >#}
+{#  {% csrf_token %}#}
+{#    <div class="form-group">#}
+{#      <div class="col-sm-offset-2 col-sm-10">#}
+{#        <button type="submit" class="btn btn-default" name="usun"><a href="{{ object.get_delete }}">Delete</a></button>#}
+{#        <button type="submit" class="btn btn-default" name="edytuj"><a href="{{ object.get_edit }}">Edit</a></button>#}
+{#      </div>#}
+{#    </div>#}
+{#</form>#}
+{#{% endif %}#}
 
 
 

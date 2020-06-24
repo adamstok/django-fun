@@ -33,7 +33,9 @@ class ApartmentDetailView(LoginRequiredMixin,View):
     def get(self,request,pk):
         apartment = Apartments.objects.get(pk=pk)
         apartments = Apartments.objects.all()
-        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments})
+        pics = ApartmentsPics.objects.filter(apartment=apartment)
+        payments = Payments.objects.filter(apartment=apartment)
+        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments,'pics':pics,'payments':payments})
 class ApartmentEditView(LoginRequiredMixin,UpdateView):
     model = Apartments
     template_name = 'edit.html'
@@ -157,3 +159,9 @@ class UploadPic(View):
             im1.save()
             return render(request,'upload.html',{'komunikat':'image upload success','form':form,'objects':pics})
         return render(request, 'upload.html', {'komunikat': 'Error', 'form': form,'objects':pics})
+
+class DeletePic(View):
+    def get(self, request, pk):
+        pic = ApartmentsPics.objects.get(pk=pk)
+        pic.delete()
+        return render(request, 'edit.html', {'komunikat': 'Datas have been deleted properly.'})

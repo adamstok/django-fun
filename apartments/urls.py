@@ -40,6 +40,7 @@ urlpatterns = [
     path('payments/delete/<int:pk>/', views.PaymentDeleteView.as_view(), name='paymentdelete'),
     path('search/', views.SearchDatas.as_view(),name='search'),
     path('upload/', views.UploadPic.as_view(),name='upload'),
+    path('pictures/delete/<int:pk>/', views.DeletePic.as_view(),name='deletepic'),
 
 ]
 

@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded',function (e) {
     buttons = document.getElementsByTagName('button')
     selects = document.getElementsByTagName('select')
     textareas = document.getElementsByTagName('textarea')
+    images = document.getElementsByTagName('img')
 
     /*
     hrefs = document.getElementsByTagName('a')
@@ -35,11 +36,10 @@ document.addEventListener('DOMContentLoaded',function (e) {
         textareas[x].setAttribute('rows',"3");
         textareas[x].style.width = '600px';
     }
-    /*
-    for(let x=0;x<hrefs.length;x++){
-        hrefs[x].setAttribute('class',"text-info");
+
+    for(let x=0;x<images.length;x++){
+        images[x].setAttribute('class',"img-rounded ");
     }
-    */
 
 
 
