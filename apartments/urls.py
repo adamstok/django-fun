@@ -35,7 +35,7 @@ urlpatterns = [
     path('renters/edit/<int:pk>/', views.RenterEditView.as_view(), name='renteredit'),
     path('renters/delete/<int:pk>/', views.RenterDeleteView.as_view(), name='renterdelete'),
     path('payments/', views.CreatePaymentsView.as_view(), name='payments'),
-    path('payments/<int:pk>', views.PaymentDetailView.as_view(), name='paymentdetail'),
+    path('payments/<int:pk>/', views.PaymentDetailView.as_view(), name='paymentdetail'),
     path('payments/edit/<int:pk>/', views.PaymentEditView.as_view(), name='paymentedit'),
     path('payments/delete/<int:pk>/', views.PaymentDeleteView.as_view(), name='paymentdelete'),
     path('search/', views.SearchDatas.as_view(),name='search'),
@@ -45,6 +45,7 @@ urlpatterns = [
 
 # Serving the media files in development mode
 if settings.DEBUG:
+    #urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 else:
     urlpatterns += staticfiles_urlpatterns()
