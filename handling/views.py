@@ -1,7 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render
-from handling.forms import SearchForm
+from handling.forms import SearchForm,ImageUploadForm,ImageUploadForm1,ApartmentsRoomsForm
+from handling.models import ExamplePic,ApartmentsPics, ApartmentsRooms
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -22,7 +24,7 @@ class CreateApartmentsView(LoginRequiredMixin,CreateView):
     model = Apartments
     template_name = 'obj_list.html'
     success_url = reverse_lazy('apartments')
-    fields = ['name','address','equipment','description']
+    fields = ['name','address','surface','rooms','equipment','description']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({'objects':Apartments.objects.all()})
@@ -31,7 +33,10 @@ class ApartmentDetailView(LoginRequiredMixin,View):
     def get(self,request,pk):
         apartment = Apartments.objects.get(pk=pk)
         apartments = Apartments.objects.all()
-        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments})
+        pics = ApartmentsPics.objects.filter(apartment=apartment)
+        payments = Payments.objects.filter(apartment=apartment)
+        rooms = ApartmentsRooms.objects.filter(apartments=apartment)
+        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments,'pics':pics,'payments':payments,'rooms':rooms})
 class ApartmentEditView(LoginRequiredMixin,UpdateView):
     model = Apartments
     template_name = 'edit.html'
@@ -138,4 +143,56 @@ class SearchDatas(LoginRequiredMixin,View):
         pay = Payments.objects.filter(p1 | p2 )
         return aparts,rent,pay
         
+
+class UploadPic(LoginRequiredMixin,View):
+    def get(self,request):
+        pics = ApartmentsPics.objects.all()
+        form = ImageUploadForm1()
+        return render(request,'upload.html',{'form':form,'objects':pics})
+
+    def post(self,request):
+        pics = ApartmentsPics.objects.all()
+        form = ImageUploadForm1(request.POST, request.FILES)
+        if form.is_valid():
+            pic = form.cleaned_data['image']
+            ap = form.cleaned_data['apartment']
+            im1 = ApartmentsPics.objects.create(pics=pic,apartment=ap)
+            im1.save()
+            return render(request,'upload.html',{'komunikat':'image upload success','form':form,'objects':pics})
+        return render(request, 'upload.html', {'komunikat': 'Error', 'form': form,'objects':pics})
+
+class DeletePic(LoginRequiredMixin,View):
+    def get(self, request, pk):
+        pic = ApartmentsPics.objects.get(pk=pk)
+        pic.delete()
+        return render(request, 'edit.html', {'komunikat': 'Datas have been deleted properly.'})
+
+
+
+class CreateRoomsView(LoginRequiredMixin,CreateView):
+    model = ApartmentsRooms
+    template_name = 'obj_list.html'
+    success_url = reverse_lazy('rooms')
+    fields = ['name']
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'objects':ApartmentsRooms.objects.all()})
+        return context
+class RoomsDetailView(LoginRequiredMixin,View):
+    def get(self,request,pk):
+        room = ApartmentsRooms.objects.get(pk=pk)
+        rooms = ApartmentsRooms.objects.all()
+        return render(request,'details.html',{'object':room,'rm':True,'objects':rooms})
+class RoomsEditView(LoginRequiredMixin,UpdateView):
+    model = ApartmentsRooms
+    template_name = 'edit.html'
+    fields = ['name']
+    def get_success_url(self):
+        roomid = self.kwargs['pk']
+        return reverse_lazy('roomsdetail',kwargs={'pk':roomid})
+class RoomsDeleteView(LoginRequiredMixin,View):
+    def get(self,request,pk):
+        room = ApartmentsRooms.objects.get(pk=pk)
+        room.delete()
+        return render(request,'edit.html',{'komunikat':'Datas have been deleted properly.'})
 

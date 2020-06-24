@@ -13,7 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 from django.views.generic import TemplateView
 
@@ -32,9 +35,23 @@ urlpatterns = [
     path('renters/edit/<int:pk>/', views.RenterEditView.as_view(), name='renteredit'),
     path('renters/delete/<int:pk>/', views.RenterDeleteView.as_view(), name='renterdelete'),
     path('payments/', views.CreatePaymentsView.as_view(), name='payments'),
-    path('payments/<int:pk>', views.PaymentDetailView.as_view(), name='paymentdetail'),
+    path('payments/<int:pk>/', views.PaymentDetailView.as_view(), name='paymentdetail'),
     path('payments/edit/<int:pk>/', views.PaymentEditView.as_view(), name='paymentedit'),
     path('payments/delete/<int:pk>/', views.PaymentDeleteView.as_view(), name='paymentdelete'),
     path('search/', views.SearchDatas.as_view(),name='search'),
+    path('upload/', views.UploadPic.as_view(),name='upload'),
+    path('pictures/delete/<int:pk>/', views.DeletePic.as_view(),name='deletepic'),
+
+    path('rooms/', views.CreateRoomsView.as_view(), name='rooms'),
+    path('rooms/<int:pk>/', views.RoomsDetailView.as_view(), name='roomsdetail'),
+    path('rooms/edit/<int:pk>/', views.RoomsEditView.as_view(), name='roomsedit'),
+    path('rooms/delete/<int:pk>/', views.RoomsDeleteView.as_view(), name='roomsdelete'),
 
 ]
+
+# Serving the media files in development mode
+if settings.DEBUG:
+    #urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    urlpatterns += staticfiles_urlpatterns()

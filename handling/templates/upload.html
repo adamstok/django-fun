@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{{ komunikat }}<br><br><br>
+
+{% if form %}
+<form class="form-horizontal" action="{% url 'upload' %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+</form>
+<br>
+{% endif %}
+
+
+<br><br>
+{% if objects %}
+
+<h3>Pics:</h3>
+<ul>
+{% for object in objects %}
+    <a href="{{ object.get_apartment }}"><img src="{{ object.pics.url }}" alt=""/></a>
+{% endfor %}
+</ul>
+{% endif %}
+
+{##}
+{% endblock %}

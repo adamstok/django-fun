@@ -124,6 +124,11 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
     'handling/templates/static/',
 )
+MEDIA_URL = '/'
+MIDIA_ROOT = (
+    os.path.join(BASE_DIR, '/'),
+    '/',
+)
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
