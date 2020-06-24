@@ -10,3 +10,6 @@ class ApartmentsForm(forms.ModelForm):
     class Meta:
         model = Apartments
         fields = "__all__"
+
+class ImageUploadForm(forms.Form):
+    image = forms.ImageField()

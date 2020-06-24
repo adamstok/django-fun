@@ -1,7 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render
-from handling.forms import SearchForm
+from handling.forms import SearchForm,ImageUploadForm
+from handling.models import ExamplePic
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -139,3 +141,16 @@ class SearchDatas(LoginRequiredMixin,View):
         return aparts,rent,pay
         
 
+class UploadPic(View):
+    def get(self,request):
+        form = ImageUploadForm()
+        return render(request,'upload.html',{'form':form})
+
+    def post(self,request):
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            im1 = ExamplePic.objects.create()
+            im1.model_pic = form.cleaned_data['image']
+            im1.save()
+            return render(request,'upload.html',{'komunikat':'image upload success','form':form})
+        return render(request, 'upload.html', {'komunikat': 'Error', 'form': form})
