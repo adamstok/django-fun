@@ -22,6 +22,12 @@ class ImageUploadForm(forms.Form):
         fields = "__all__"
 
 class ApartmentsRoomsForm(forms.Form):
+    features = forms.ModelMultipleChoiceField(
+        queryset=ApartmentsRooms.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
     class Meta:
         model = ApartmentsRooms
         fields = "__all__"

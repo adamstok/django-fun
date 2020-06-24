@@ -24,7 +24,7 @@
 <h3>Pics:</h3>
 <ul>
 {% for object in objects %}
-    <img src="{{ object.pics.url }}" alt=""/>
+    <a href="{{ object.get_apartment }}"><img src="{{ object.pics.url }}" alt=""/></a>
 {% endfor %}
 </ul>
 {% endif %}

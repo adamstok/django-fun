@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
-from handling.forms import SearchForm,ImageUploadForm,ImageUploadForm1
+from handling.forms import SearchForm,ImageUploadForm,ImageUploadForm1,ApartmentsRoomsForm
 from handling.models import ExamplePic,ApartmentsPics, ApartmentsRooms
 
 # Create your views here.

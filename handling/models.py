@@ -74,3 +74,5 @@ class ApartmentsPics(models.Model):
     apartment = models.ForeignKey(Apartments,on_delete=models.CASCADE)
     def get_delete(self):
         return f'/pictures/delete/{self.id}/'
+    def get_apartment(self):
+        return f'/apartments/{self.apartment_id}/'
