@@ -4,10 +4,22 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class ApartmentsRooms(models.Model):
+    name = models.CharField(max_length=250)
+    def __str__(self):
+        return f'Name: {self.name}'
+    def get_detail_url(self):
+        return f'/rooms/{self.id}/'
+    def get_edit(self):
+        return f'/rooms/edit/{self.id}/'
+    def get_delete(self):
+        return f'/rooms/delete/{self.id}/'
 
 class Apartments(models.Model):
     name = models.CharField(max_length=250)
     address = models.CharField(max_length=250)
+    surface = models.DecimalField(max_digits=8, decimal_places=3)
+    rooms = models.ManyToManyField(ApartmentsRooms)
     equipment = models.TextField()
     description = models.TextField()
 

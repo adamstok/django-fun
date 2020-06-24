@@ -42,6 +42,11 @@ urlpatterns = [
     path('upload/', views.UploadPic.as_view(),name='upload'),
     path('pictures/delete/<int:pk>/', views.DeletePic.as_view(),name='deletepic'),
 
+    path('rooms/', views.CreateRoomsView.as_view(), name='rooms'),
+    path('rooms/<int:pk>/', views.RoomsDetailView.as_view(), name='roomsdetail'),
+    path('rooms/edit/<int:pk>/', views.RoomsEditView.as_view(), name='roomsedit'),
+    path('rooms/delete/<int:pk>/', views.RoomsDeleteView.as_view(), name='roomsdelete'),
+
 ]
 
 # Serving the media files in development mode

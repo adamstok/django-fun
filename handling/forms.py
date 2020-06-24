@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import Form
-from handling.models import Apartments,ApartmentsPics
+from handling.models import Apartments,ApartmentsPics,ApartmentsRooms
 
 
 class SearchForm(forms.Form):
@@ -19,4 +19,9 @@ class ImageUploadForm1(forms.Form):
 class ImageUploadForm(forms.Form):
     class Meta:
         model = ApartmentsPics
+        fields = "__all__"
+
+class ApartmentsRoomsForm(forms.Form):
+    class Meta:
+        model = ApartmentsRooms
         fields = "__all__"
