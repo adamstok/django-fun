@@ -3,25 +3,25 @@
 
 {{ komunikat }}<br><br><br>
 
-{#{% if form %}#}
-{#<form class="form-horizontal" method="POST" >#}
-{#  {% csrf_token %}#}
-{#    {{ form.as_p }}#}
-{##}
-{#    <div class="form-group">#}
-{#      <div class="col-sm-offset-2 col-sm-10">#}
-{#        <button type="submit" class="btn btn-default">Submit</button>#}
-{#      </div>#}
-{#    </div>#}
-{#</form>#}
-{#<br>#}
-{#{% endif %}#}
+{% if form %}
+<form class="form-horizontal" action="{% url 'upload' %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+    {{ form.as_p }}
 
-<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <p>
-        <input id="id_image" type="file" class="" name="image">
-    </p>
-     <button type="submit" class="btn btn-default">Submit</button>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
 </form>
+<br>
+{% endif %}
+
+{#<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">{% csrf_token %}#}
+{#    <p>#}
+{#        <input id="id_image" type="file" class="" name="image">#}
+{#    </p>#}
+{#     <button type="submit" class="btn btn-default">Submit</button>#}
+{#</form>#}
 
 {% endblock %}
