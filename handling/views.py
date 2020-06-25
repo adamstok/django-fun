@@ -24,7 +24,7 @@ class CreateApartmentsView(LoginRequiredMixin,CreateView):
     model = Apartments
     template_name = 'obj_list.html'
     success_url = reverse_lazy('apartments')
-    fields = ['name','address','surface','rooms','equipment','description']
+    fields = ['name','address','surface','rent','rooms','equipment','description']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({'objects':Apartments.objects.all()})
