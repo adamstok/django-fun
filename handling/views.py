@@ -72,7 +72,8 @@ class RenterDetailView(LoginRequiredMixin,View):
     def get(self,request,pk):
         renter = Renters.objects.get(pk=pk)
         renters = Renters.objects.all()
-        return render(request,'details.html',{'object':renter,'rent':True,'objects':renters})
+        payments = Payments.objects.filter(renter=renter).order_by('date')
+        return render(request,'details.html',{'object':renter,'rent':True,'objects':renters,'p':payments})
 class RenterEditView(LoginRequiredMixin,UpdateView):
     model = Renters
     template_name = 'edit.html'
@@ -95,12 +96,12 @@ class CreatePaymentsView(LoginRequiredMixin,CreateView):
     fields = ['date','amount','renter','apartment']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({'objects':Payments.objects.all()})
+        context.update({'objects':Payments.objects.all().order_by('date')})
         return context
 class PaymentDetailView(LoginRequiredMixin,View):
     def get(self,request,pk):
         payment = Payments.objects.get(pk=pk)
-        payments = Payments.objects.all()
+        payments = Payments.objects.all().order_by('date')
         return render(request,'details.html',{'object':payment,'pay':True,'objects':payments})
 class PaymentEditView(LoginRequiredMixin,UpdateView):
     model = Payments

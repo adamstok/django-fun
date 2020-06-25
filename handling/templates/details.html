@@ -74,6 +74,15 @@
     <p>First name: {{ object.first_name }}</p>
     <p>Last name: {{ object.last_name }}</p>
     <p>Apartment: {{ object.apartment }} </p>
+    {% if p %}
+    <p>Payments: </p>
+    <ul>
+    {% for payment in p %}
+    <a href="{{ payment.get_detail_url }}"> <li class="{{ class }}"> {{ payment }}</li></a>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
 <form class="form-horizontal" >
   {% csrf_token %}
     <div class="form-group">
