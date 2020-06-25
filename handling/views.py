@@ -24,7 +24,7 @@ class CreateApartmentsView(LoginRequiredMixin,CreateView):
     model = Apartments
     template_name = 'obj_list.html'
     success_url = reverse_lazy('apartments')
-    fields = ['name','address','surface','rent','rooms','equipment','description']
+    fields = ['name','address','surface','rent','costs','rooms','equipment','description']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({'objects':Apartments.objects.all()})
@@ -182,7 +182,7 @@ class DeletePic(LoginRequiredMixin,View):
         rooms = ApartmentsRooms.objects.filter(apartments=apartment)
         return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments,'pics':pics,'payments':payments,'rooms':rooms,'renter':renter})
 
-    
+
 
 # class DeletePic(LoginRequiredMixin,View):
 #     def get(self, request, pk):

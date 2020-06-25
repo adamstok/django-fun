@@ -20,6 +20,7 @@ class Apartments(models.Model):
     address = models.CharField(max_length=250)
     surface = models.DecimalField(max_digits=8, decimal_places=3)
     rent = models.IntegerField(null=True)
+    costs = models.IntegerField(null=True)
     rooms = models.ManyToManyField(ApartmentsRooms)
     equipment = models.TextField()
     description = models.TextField()

@@ -37,7 +37,9 @@
 {% for object in objects %}
     <div class="column">
    <a href="{{ object.get_apartment }}"><img src="{{ object.pics.url }}" alt=""/></a>
+    <h4>{{ object.apartment.name }} {{ object.apartment.address }}</h4>
     </div>
+
 {% endfor %}
 </div>
 {% endif %}
