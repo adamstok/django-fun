@@ -9,6 +9,10 @@
     <p>Address: {{ object.address }}</p>
     <p>Equipments: {{ object.equipment }} </p>
     <p>Surface: {{ object.surface }}</p>
+    <p>Rent: {{ object.rent }}</p>
+    {% if renter %}
+    <p>Rented by: <a href="{{ renter.get_detail_url }}">{{ renter }}</a></p>
+    {% endif %}
     <p>Description: {{ object.description }}</p>
     {% if rooms %}
     <p>Rooms: </p>
