@@ -17,7 +17,7 @@
 <h3>Apartments list:</h3>
 <ul>
 {% for object in objects_apartments %}
-    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>
+    <li class="{{ class }}"><a href="{{ object.get_detail_url }}"> {{ object }}</a></li>
 {% endfor %}
 </ul>
 {% endif %}

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from handling.forms import SearchForm,ImageUploadForm,ImageUploadForm1,ApartmentsRoomsForm
 from handling.models import ExamplePic,ApartmentsPics, ApartmentsRooms
+from normalview.models import Messages
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -24,7 +25,7 @@ class CreateApartmentsView(LoginRequiredMixin,CreateView):
     model = Apartments
     template_name = 'obj_list.html'
     success_url = reverse_lazy('apartments')
-    fields = ['name','address','surface','rooms','equipment','description']
+    fields = ['name','address','surface','rent','costs','rooms','equipment','description']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({'objects':Apartments.objects.all()})
@@ -35,12 +36,17 @@ class ApartmentDetailView(LoginRequiredMixin,View):
         apartments = Apartments.objects.all()
         pics = ApartmentsPics.objects.filter(apartment=apartment)
         payments = Payments.objects.filter(apartment=apartment)
+        try:
+            renter = Renters.objects.get(apartment=apartment)
+        except Renters.DoesNotExist:
+            renter = False
         rooms = ApartmentsRooms.objects.filter(apartments=apartment)
-        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments,'pics':pics,'payments':payments,'rooms':rooms})
+        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments,'pics':pics,'payments':payments,'rooms':rooms,'renter':renter})
 class ApartmentEditView(LoginRequiredMixin,UpdateView):
     model = Apartments
     template_name = 'edit.html'
-    fields = ['name','address','equipment','description']
+    #fields = ['name','address','equipment','description']
+    fields = ['name', 'address', 'surface', 'rent', 'costs', 'rooms', 'equipment', 'description']
     def get_success_url(self):
         apartmentid = self.kwargs['pk']
         return reverse_lazy('apartmentdetail',kwargs={'pk':apartmentid})
@@ -66,7 +72,8 @@ class RenterDetailView(LoginRequiredMixin,View):
     def get(self,request,pk):
         renter = Renters.objects.get(pk=pk)
         renters = Renters.objects.all()
-        return render(request,'details.html',{'object':renter,'rent':True,'objects':renters})
+        payments = Payments.objects.filter(renter=renter).order_by('date')
+        return render(request,'details.html',{'object':renter,'rent':True,'objects':renters,'p':payments})
 class RenterEditView(LoginRequiredMixin,UpdateView):
     model = Renters
     template_name = 'edit.html'
@@ -89,12 +96,12 @@ class CreatePaymentsView(LoginRequiredMixin,CreateView):
     fields = ['date','amount','renter','apartment']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({'objects':Payments.objects.all()})
+        context.update({'objects':Payments.objects.all().order_by('date')})
         return context
 class PaymentDetailView(LoginRequiredMixin,View):
     def get(self,request,pk):
         payment = Payments.objects.get(pk=pk)
-        payments = Payments.objects.all()
+        payments = Payments.objects.all().order_by('date')
         return render(request,'details.html',{'object':payment,'pay':True,'objects':payments})
 class PaymentEditView(LoginRequiredMixin,UpdateView):
     model = Payments
@@ -130,23 +137,23 @@ class SearchDatas(LoginRequiredMixin,View):
         a2 = Q(address__icontains=a_address)
         a3 = Q(equipment__icontains=a_equipment)
         a4 = Q(description__icontains=a_description)
-        aparts = Apartments.objects.filter(a1 | a2 | a3 | a4)
+        aparts = Apartments.objects.filter(a1 | a2 | a3 | a4).order_by('name')
         r_first = search_form.cleaned_data.get('query', "")
         r_last = search_form.cleaned_data.get('query', "")
         r1 = Q(first_name__icontains=r_first)
         r2 = Q(last_name__icontains=r_last)
-        rent = Renters.objects.filter(r1 | r2 )
+        rent = Renters.objects.filter(r1 | r2 ).order_by('first_name')
         p_date = search_form.cleaned_data.get('query', "")
         p_amount = search_form.cleaned_data.get('query', "")
         p1 = Q(date__icontains=p_date)
         p2 = Q(amount__icontains=p_amount)
-        pay = Payments.objects.filter(p1 | p2 )
+        pay = Payments.objects.filter(p1 | p2 ).order_by('date')
         return aparts,rent,pay
         
 
 class UploadPic(LoginRequiredMixin,View):
     def get(self,request):
-        pics = ApartmentsPics.objects.all()
+        pics = ApartmentsPics.objects.all().order_by('apartment_id')
         form = ImageUploadForm1()
         return render(request,'upload.html',{'form':form,'objects':pics})
 
@@ -164,8 +171,28 @@ class UploadPic(LoginRequiredMixin,View):
 class DeletePic(LoginRequiredMixin,View):
     def get(self, request, pk):
         pic = ApartmentsPics.objects.get(pk=pk)
+        apartm = pic.apartment_id
         pic.delete()
-        return render(request, 'edit.html', {'komunikat': 'Datas have been deleted properly.'})
+        #return render(request, 'edit.html', {'komunikat': 'Datas have been deleted properly.'})
+        apartment = Apartments.objects.get(pk=apartm)
+        apartments = Apartments.objects.all()
+        pics = ApartmentsPics.objects.filter(apartment=apartment)
+        payments = Payments.objects.filter(apartment=apartment)
+        try:
+            renter = Renters.objects.get(apartment=apartment)
+        except Renters.DoesNotExist:
+            renter = False
+        rooms = ApartmentsRooms.objects.filter(apartments=apartment)
+        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments,'pics':pics,'payments':payments,'rooms':rooms,'renter':renter})
+
+
+
+# class DeletePic(LoginRequiredMixin,View):
+#     def get(self, request, pk):
+#         pic = ApartmentsPics.objects.get(pk=pk)
+#         apart = pic.apartment_id
+#         pic.delete()
+#         return render(request, 'edit.html', {'komunikat': 'Datas have been deleted properly.'})
 
 
 
@@ -195,4 +222,19 @@ class RoomsDeleteView(LoginRequiredMixin,View):
         room = ApartmentsRooms.objects.get(pk=pk)
         room.delete()
         return render(request,'edit.html',{'komunikat':'Datas have been deleted properly.'})
+
+
+class SeeMessageView(LoginRequiredMixin,View):
+    def get(self, request):
+        msg = Messages.objects.all()
+        return render(request,'msg.html',{'object':msg})
+        #return HttpResponse(msg)
+
+class DeleteMessages(LoginRequiredMixin,View):
+    def get(self,request,pk):
+        msg = Messages.objects.get(pk=pk)
+        msg.delete()
+        messages = Messages.objects.all()
+        return render(request, 'msg.html', {'object': messages,'komunikat':'Message deleted'})
+
 
