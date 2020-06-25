@@ -15,7 +15,7 @@ class NormalHome(View):
         return render(request, 'home.html')
 
 
-class MessageView(CreateView):
+class MessageView(View):
     def get(self,request):
         form = MessagesForm()
         return render(request,'message.html',{'form':form})

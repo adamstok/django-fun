@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
 
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="60" />
     <title>Home</title>
 </head>
 {% if user.is_authenticated %}
@@ -24,7 +25,7 @@
   <li role="presentation"><a href="{% url 'payments' %}">Payments</a></li>
   <li role="presentation"><a href="{% url 'rooms' %}">Rooms</a></li>
   <li role="presentation"><a href="{% url 'upload' %}">Upload pictures</a></li>
-  <li role="presentation"><a href="{% url 'seemessages' %}">See messages</a></li>
+  <li role="presentation"><a href="{% url 'seemessages' %}">{{ mess }}</a></li>
   <li role="presentation"><a href="{% url 'search' %}">Search</a></li>
   <li role="presentation"><a href="{% url 'logout' %}">Logout</a></li>
 </ul>
@@ -46,4 +47,6 @@
     {% endblock %}
 
 {% endif %}
+
+<p style="position: fixed; bottom: 5px ; text-align: right"> {{ now }}  {{ hour }} </p>
 </html>

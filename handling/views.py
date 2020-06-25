@@ -137,17 +137,17 @@ class SearchDatas(LoginRequiredMixin,View):
         a2 = Q(address__icontains=a_address)
         a3 = Q(equipment__icontains=a_equipment)
         a4 = Q(description__icontains=a_description)
-        aparts = Apartments.objects.filter(a1 | a2 | a3 | a4)
+        aparts = Apartments.objects.filter(a1 | a2 | a3 | a4).order_by('name')
         r_first = search_form.cleaned_data.get('query', "")
         r_last = search_form.cleaned_data.get('query', "")
         r1 = Q(first_name__icontains=r_first)
         r2 = Q(last_name__icontains=r_last)
-        rent = Renters.objects.filter(r1 | r2 )
+        rent = Renters.objects.filter(r1 | r2 ).order_by('first_name')
         p_date = search_form.cleaned_data.get('query', "")
         p_amount = search_form.cleaned_data.get('query', "")
         p1 = Q(date__icontains=p_date)
         p2 = Q(amount__icontains=p_amount)
-        pay = Payments.objects.filter(p1 | p2 )
+        pay = Payments.objects.filter(p1 | p2 ).order_by('date')
         return aparts,rent,pay
         
 
