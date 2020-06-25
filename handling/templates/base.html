@@ -33,6 +33,8 @@
     {% block content %}
     {% endblock %}
 
+<p style="position: fixed; bottom: 0px"> <a href="{% url 'seemessages' %}"> {{ mess }} </a></p>
+
 </body>
 {% else %}
   <p>You are not logged in</p>
