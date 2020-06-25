@@ -152,7 +152,7 @@ class SearchDatas(LoginRequiredMixin,View):
 
 class UploadPic(LoginRequiredMixin,View):
     def get(self,request):
-        pics = ApartmentsPics.objects.all()
+        pics = ApartmentsPics.objects.all().order_by('apartment_id')
         form = ImageUploadForm1()
         return render(request,'upload.html',{'form':form,'objects':pics})
 
