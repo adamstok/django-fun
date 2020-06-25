@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from handling.forms import SearchForm,ImageUploadForm,ImageUploadForm1,ApartmentsRoomsForm
 from handling.models import ExamplePic,ApartmentsPics, ApartmentsRooms
+from normalview.models import Messages
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -44,7 +45,8 @@ class ApartmentDetailView(LoginRequiredMixin,View):
 class ApartmentEditView(LoginRequiredMixin,UpdateView):
     model = Apartments
     template_name = 'edit.html'
-    fields = ['name','address','equipment','description']
+    #fields = ['name','address','equipment','description']
+    fields = ['name', 'address', 'surface', 'rent', 'costs', 'rooms', 'equipment', 'description']
     def get_success_url(self):
         apartmentid = self.kwargs['pk']
         return reverse_lazy('apartmentdetail',kwargs={'pk':apartmentid})
@@ -219,4 +221,19 @@ class RoomsDeleteView(LoginRequiredMixin,View):
         room = ApartmentsRooms.objects.get(pk=pk)
         room.delete()
         return render(request,'edit.html',{'komunikat':'Datas have been deleted properly.'})
+
+
+class SeeMessageView(LoginRequiredMixin,View):
+    def get(self, request):
+        msg = Messages.objects.all()
+        return render(request,'msg.html',{'object':msg})
+        #return HttpResponse(msg)
+
+class DeleteMessages(LoginRequiredMixin,View):
+    def get(self,request,pk):
+        msg = Messages.objects.get(pk=pk)
+        msg.delete()
+        messages = Messages.objects.all()
+        return render(request, 'msg.html', {'object': messages,'komunikat':'Message deleted'})
+
 

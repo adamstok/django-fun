@@ -19,13 +19,18 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 from django.views.generic import TemplateView
+from normalview.views import  MessageView,NormalHome
 
 from handling import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('django.contrib.auth.urls')),
-    path('', views.Home.as_view(), name='home'),
+    #path('', views.Home.as_view(), name='home'),
+    path('', NormalHome.as_view(), name='home'),
+    path('message/', MessageView.as_view(), name='message'),
+    path('seemessages/', views.SeeMessageView.as_view(), name='seemessages'),
+    path('seemessages/<int:pk>', views.DeleteMessages.as_view(), name='delmessages'),
     path('apartments/', views.CreateApartmentsView.as_view(), name='apartments'),
     path('apartments/<int:pk>/', views.ApartmentDetailView.as_view(), name='apartmentdetail'),
     path('apartments/edit/<int:pk>/', views.ApartmentEditView.as_view(), name='apartmentedit'),

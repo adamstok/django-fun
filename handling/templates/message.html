@@ -1,0 +1,22 @@
+
+{% extends 'home.html' %}
+{% block normal %}
+    <br><br><br>
+{{ komunikat }}
+<br><br>
+{% if form %}
+<div class="form-group">
+<form class="form-horizontal" method="POST" >
+  {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Send</button>
+      </div>
+    </div>
+</form>
+</div>
+<br>
+{% endif %}
+{% endblock %}

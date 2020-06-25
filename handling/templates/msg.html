@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    {{ komunikat }}
+    <br>
+    <h3>Messages:</h3>
+    {% for message in object %}
+        <ul>
+        <li>Date:{{ message.date }}</li>
+        <li>Message: {{ message.message }}</li>
+        <li>Email: {{ message.from_mail }}</li>
+        <a href="{{ message.get_delete }}">Delete</a>
+        </ul>
+    {% endfor %}
+{% endblock %}

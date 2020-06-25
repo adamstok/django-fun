@@ -35,7 +35,15 @@
 
 </body>
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
+
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="{% url 'home' %}">Home</a></li>
+    <li role="presentation"><a href="{% url 'message' %}">Contact us</a></li>
+    <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
+</ul>
+
+    {% block normal %}
+    {% endblock %}
+
 {% endif %}
 </html>
