@@ -168,8 +168,28 @@ class UploadPic(LoginRequiredMixin,View):
 class DeletePic(LoginRequiredMixin,View):
     def get(self, request, pk):
         pic = ApartmentsPics.objects.get(pk=pk)
+        apartm = pic.apartment_id
         pic.delete()
-        return render(request, 'edit.html', {'komunikat': 'Datas have been deleted properly.'})
+        #return render(request, 'edit.html', {'komunikat': 'Datas have been deleted properly.'})
+        apartment = Apartments.objects.get(pk=apartm)
+        apartments = Apartments.objects.all()
+        pics = ApartmentsPics.objects.filter(apartment=apartment)
+        payments = Payments.objects.filter(apartment=apartment)
+        try:
+            renter = Renters.objects.get(apartment=apartment)
+        except Renters.DoesNotExist:
+            renter = False
+        rooms = ApartmentsRooms.objects.filter(apartments=apartment)
+        return render(request,'details.html',{'object':apartment,'apart':True,'objects':apartments,'pics':pics,'payments':payments,'rooms':rooms,'renter':renter})
+
+    
+
+# class DeletePic(LoginRequiredMixin,View):
+#     def get(self, request, pk):
+#         pic = ApartmentsPics.objects.get(pk=pk)
+#         apart = pic.apartment_id
+#         pic.delete()
+#         return render(request, 'edit.html', {'komunikat': 'Datas have been deleted properly.'})
 
 
 
