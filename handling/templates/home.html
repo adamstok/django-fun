@@ -46,6 +46,33 @@
     {% block normal %}
     {% endblock %}
 
+
+
+{% if freeaparts %}
+    <h3>Our Apartments: </h3>
+    {% for ap in freeaparts %}
+        <div><a href="/apartments/torent/{{ ap.pk }}/">
+        <h2>{{ ap.name }}</h2>
+        <h4>{{ ap.description }}</h4>
+        <h4>{{ ap.rent }}</h4>
+        <h4>{{ ap.surface }}</h4>
+        <h4>{{ ap.equipment }}</h4>
+        {% if ap.rooms %}
+            {% for r in ap.rooms.all %}
+            <h4>{{ r.name }}</h4>
+            {% endfor %}
+        {% endif %}
+            {% if ap.apartmentspics_set.all %}
+                {% for pi in ap.apartmentspics_set.all %}
+                <img src="{{ pi.pics.url }}">
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+        <h3>No free apartments available </h3>
+{% endif %}
+
 {% endif %}
 
 <p style="position: fixed; bottom: 5px ; text-align: right"> {{ now }}  {{ hour }} </p>

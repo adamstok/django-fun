@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
-from handling.forms import SearchForm,ImageUploadForm,ImageUploadForm1,ApartmentsRoomsForm
+from handling.forms import SearchForm,ImageUploadForm,ImageUploadForm1,ApartmentsRoomsForm,ApartmentsForm,CreatePaymentsForm
 from handling.models import ExamplePic,ApartmentsPics, ApartmentsRooms
 from normalview.models import Messages
 
@@ -28,6 +28,7 @@ class CreateApartmentsView(LoginRequiredMixin,CreateView):
     fields = ['name','address','surface','rent','costs','rooms','equipment','description']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        #rented = Apartments.objects.filter(renters__isnull=False)
         context.update({'objects':Apartments.objects.all()})
         return context
 class ApartmentDetailView(LoginRequiredMixin,View):
@@ -35,7 +36,7 @@ class ApartmentDetailView(LoginRequiredMixin,View):
         apartment = Apartments.objects.get(pk=pk)
         apartments = Apartments.objects.all()
         pics = ApartmentsPics.objects.filter(apartment=apartment)
-        payments = Payments.objects.filter(apartment=apartment)
+        payments = Payments.objects.filter(apartment=apartment).order_by('date')
         try:
             renter = Renters.objects.get(apartment=apartment)
         except Renters.DoesNotExist:
@@ -89,15 +90,48 @@ class RenterDeleteView(LoginRequiredMixin,View):
 
 
 
-class CreatePaymentsView(LoginRequiredMixin,CreateView):
-    model = Payments
-    template_name = 'obj_list.html'
-    success_url = reverse_lazy('payments')
-    fields = ['date','amount','renter','apartment']
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({'objects':Payments.objects.all().order_by('date')})
-        return context
+# class CreatePaymentsView(LoginRequiredMixin,CreateView):
+#     model = Payments
+#     template_name = 'obj_list.html'
+#     success_url = reverse_lazy('payments')
+#     fields = ['date','amount','renter','apartment']
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context.update({'objects':Payments.objects.all().order_by('date'),'test':'TEst'})
+#         return context
+    # model = Payments
+    # template_name = 'obj_list.html'
+    # fields = ['date','amount','renter']
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context.update({'objects':Payments.objects.all().order_by('date')})
+    #     return context
+    # def get_success_url(self):
+    #     paymentid = self.kwargs['pk']
+    #     renterid = self.kwargs['renter']
+    #     renter = Renters.objects.get(pk=renterid)
+    #     payment = Payments.objects.get(pk=paymentid)
+    #     apartment = Apartments.objects.get(pk=renter.apartment_id)
+    #     payment.add(apartment=apartment )
+    #     payment.save()
+    #     return reverse_lazy('payments',kwargs={'objects':Payments.objects.all().order_by('date')})
+class CreatePaymentsView(LoginRequiredMixin,View):
+    def get(self,request):
+        renters = Renters.objects.all()
+        objects = Payments.objects.all().order_by('date')
+        return render(request,'obj_list2.html',{'renters':renters,'objects':objects})
+    def post(self,request):
+        objects = Payments.objects.all().order_by('date')
+        date = request.POST['date']
+        amount = request.POST['amount']
+        renterid = request.POST['renter']
+        renter = Renters.objects.get(pk=renterid)
+        apart = renter.apartment
+        p = Payments.objects.create(date=date,amount=amount,renter=renter,apartment=apart)
+        renters = Renters.objects.all()
+        return render(request, 'obj_list2.html', {'renters': renters,'komunikat':'Payment added','objects':objects})
+
+
 class PaymentDetailView(LoginRequiredMixin,View):
     def get(self,request,pk):
         payment = Payments.objects.get(pk=pk)

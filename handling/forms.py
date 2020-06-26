@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import Form
-from handling.models import Apartments,ApartmentsPics,ApartmentsRooms
+from handling.models import Apartments,ApartmentsPics,ApartmentsRooms,Payments
 
 
 class SearchForm(forms.Form):
@@ -27,7 +27,12 @@ class ApartmentsRoomsForm(forms.Form):
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
-
     class Meta:
         model = ApartmentsRooms
         fields = "__all__"
+
+
+class CreatePaymentsForm(forms.Form):
+    class Meta:
+        model = Payments
+        fields = ['date','amount','renter']
