@@ -28,6 +28,7 @@ class CreateApartmentsView(LoginRequiredMixin,CreateView):
     fields = ['name','address','surface','rent','costs','rooms','equipment','description']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # rented = Apartments.objects.filter(renters__isnull=False)
         context.update({'objects':Apartments.objects.all()})
         return context
 class ApartmentDetailView(LoginRequiredMixin,View):

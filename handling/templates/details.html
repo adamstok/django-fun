@@ -101,7 +101,7 @@
     <p>Date: {{ object.date }}</p>
     <p>Amount: {{ object.amount }}</p>
     <p>Renter: {{ object.renter }} </p>
-    <p>Apartment: {{ object.apartment }} </p>
+    <p>Apartment: <a href="{{ object.apartment.get_detail_url }}">{{ object.apartment }}</a> </p>
 
 
 <form class="form-horizontal" >

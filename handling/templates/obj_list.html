@@ -24,7 +24,7 @@
 <h3>List:</h3>
 <ul>
 {% for object in objects %}
-    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>
+    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }} {% if rentedby %} -- Rented {% endif %}</li></a>
 {% endfor %}
 </ul>
 {% endif %}
