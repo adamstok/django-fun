@@ -35,7 +35,7 @@ class ApartmentDetailView(LoginRequiredMixin,View):
         apartment = Apartments.objects.get(pk=pk)
         apartments = Apartments.objects.all()
         pics = ApartmentsPics.objects.filter(apartment=apartment)
-        payments = Payments.objects.filter(apartment=apartment)
+        payments = Payments.objects.filter(apartment=apartment).order_by('date')
         try:
             renter = Renters.objects.get(apartment=apartment)
         except Renters.DoesNotExist:
