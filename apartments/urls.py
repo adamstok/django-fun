@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 from django.views.generic import TemplateView
-from normalview.views import  MessageView,NormalHome
+from normalview.views import  MessageView,NormalHome,NormalApartmentDetailView
 
 from handling import views
 
@@ -46,11 +46,11 @@ urlpatterns = [
     path('search/', views.SearchDatas.as_view(),name='search'),
     path('upload/', views.UploadPic.as_view(),name='upload'),
     path('pictures/delete/<int:pk>/', views.DeletePic.as_view(),name='deletepic'),
-
     path('rooms/', views.CreateRoomsView.as_view(), name='rooms'),
     path('rooms/<int:pk>/', views.RoomsDetailView.as_view(), name='roomsdetail'),
     path('rooms/edit/<int:pk>/', views.RoomsEditView.as_view(), name='roomsedit'),
     path('rooms/delete/<int:pk>/', views.RoomsDeleteView.as_view(), name='roomsdelete'),
+    path('apartments/torent/<int:pk>/', NormalApartmentDetailView.as_view(), name='apartmenttorentdetail'),
 
 ]
 

@@ -1,0 +1,39 @@
+{% extends 'home.html' %}
+{% block normal %}
+
+{% if apart %}
+    <h3>Apartment: </h3>
+    <p>Name: {{ object.name }}</p>
+    <p>Address: {{ object.address }}</p>
+    <p>Equipments: {{ object.equipment }} </p>
+    <p>Surface: {{ object.surface }}</p>
+    <p>Rent: {{ object.rent }}</p>
+    <p>Costs: {{ object.costs }}</p>
+    <p>Description: {{ object.description }}</p>
+    {% if rooms %}
+    <p>Rooms: </p>
+    <ul>
+    {% for room in rooms %}
+        <li class="{{ class }}"> {{ room }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+
+
+{% if pics %}
+    <hr>
+<h3>Pics:</h3>
+<div class="row">
+{% for pic in pics %}
+    <div class="column">
+    <img src="{{ pic.pics.url }}" alt=""/>
+    </div>
+{% endfor %}
+</div>
+{% endif %}
+{% endif %}
+<hr>
+<hr>
+
+{% endblock %}
