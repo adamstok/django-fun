@@ -73,7 +73,7 @@
     <h3>Renter: </h3>
     <p>First name: {{ object.first_name }}</p>
     <p>Last name: {{ object.last_name }}</p>
-    <p>Apartment: {{ object.apartment }} </p>
+    <p>Apartment: <a href="{{ object.apartment.get_detail_url }}"> {{ object.apartment }} </a></p>
     {% if p %}
     <p>Payments: </p>
     <ul>
@@ -141,7 +141,7 @@
 <h3>List:</h3>
 <ul>
 {% for object in objects %}
-    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }}</li></a>
+    <a href="{{ object.get_detail_url }}"> <li class="{{ class }}"> {{ object }} {% if object.renters %} -- Rented {% endif %}</li></a>
 {% endfor %}
 </ul>
 {% endif %}

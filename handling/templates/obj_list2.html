@@ -7,8 +7,23 @@
 <div class="form-group">
 <form class="form-horizontal" method="POST" >
   {% csrf_token %}
-    {{ form.as_p }}
+    <p>
+    <label for="date">Date:</label>
+    <input type="date" name="date" id="date">
+    </p>
+    <p>
+    <label for="amount">Amount:</label>
+    <input type="number" step='0.01' name="amount" id="amount">
+    </p>
+    <p>
+    <label for="renter">Renter:</label>
+    <select name="renter" id="renter">
+        {% for renter in renters %}
 
+            <option value="{{ renter.pk }}">{{ renter }}</option>
+        {% endfor %}
+    </select>
+    </p>
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-default">Add</button>
