@@ -37,7 +37,7 @@
 {% if freeaparts %}
     <h3>Our Apartments: </h3>
     {% for ap in freeaparts %}
-        <div><a href="/apartments/torent/{{ ap.pk }}/">
+        <div><a href="{{ ap.get_detail_url }}">
         <h2>{{ ap.name }}</h2>
         <h4>{{ ap.description }}</h4>
         <h4>{{ ap.rent }}</h4>
