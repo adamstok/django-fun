@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 
-    {% load static %}
-    <script src="{% static 'handling/js/change.js' %}"></script>
-
-    <link rel="stylesheet" href="{% static 'handling/css/gallery.css' %}">
+{#    {% load static %}#}
+{#    <script src="{% static 'handling/js/change.js' %}"></script>#}
+{##}
+{#    <link rel="stylesheet" href="{% static 'handling/css/gallery.css' %}">#}
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <!-- Optional theme -->
@@ -106,7 +106,7 @@
   flex: 1;
 }
 </style>
-
+{{ komm }}
 <div id="wrapper">
 {% if freeaparts %}
     <div id="left">
@@ -136,10 +136,11 @@
         <h3>No free apartments available </h3>
     </div>
 {% endif %}
-<div id="right normalsearch">
-
-    <div class="form-group"  style="position: fixed">
-<form class="form-horizontal" method="GET" >
+<div id="right" style="height: 10px">
+{#class="form-group"#}
+{#class="form-horizontal"#}
+    <div  id="normalsearch" style="position: fixed; height: 10px">
+<form  method="GET" >
   {% csrf_token %}
     <p>
     <label for="address">City:</label>
@@ -161,16 +162,16 @@
     <label for="rentto">Rent to:</label>
     <input type="number"  name="rentto" id="rentto">
     </p>
-    <p>
-    <label for="equipment">Equipment:</label>
-    <input type="text"  name="equipment" id="equipment">
-    </p>
+{#    <p>#}
+{#    <label for="equipment">Equipment:</label>#}
+{#    <input type="text"  name="equipment" id="equipment">#}
+{#    </p>#}
     <p>
     <label for="rooms">Rooms:</label>
     <div>
         {% for room in rooms2 %}
-        <input type="checkbox" name="{{ room.pk }} " id="{{ room.pl }}">
-        <label for="{{ room.pk }}">{{ room.name }}</label>
+        <input type="checkbox" name="rooms" id="rooms" value="{{ room.name }}">
+        <label for="rooms">{{ room.name }}</label>
         {% endfor %}
     </div>
     </p>

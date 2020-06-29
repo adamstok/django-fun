@@ -22,7 +22,7 @@ class NormalHome(View):
         if surfacefrom == '':
             surfacefrom = 0
         if surfaceto == '':
-            surfaceto = 0
+            surfaceto = 9999999
 
         rentfrom = request.GET.get('rentfrom','')
         rentto = request.GET.get('rentto','')
@@ -32,7 +32,7 @@ class NormalHome(View):
             rentto = 999999999
 
         equipment = request.GET.get('equipment','')
-        # selected_rooms = request.GET.getlist('rooms')
+        selected_rooms = request.GET.getlist('rooms')
         #
         # selected_rooms_queryset = ApartmentsRooms.objects.filter(pk__icontains=selected_rooms)
         #
@@ -41,15 +41,15 @@ class NormalHome(View):
         a3 = Q(surface__lte=surfaceto)
         a4 = Q(rent__gte=rentfrom)
         a5 = Q(rent__lte=rentto)
-        a6 = Q(equipment__icontains=equipment)
-        a6 = Q(renters__isnull=True)
-        # #a7 = Q(rooms__icontains=selected_rooms_queryset)
-        # free_apart = Apartments.objects.filter(a1 | a2 | a3 | a4 | a5 | a6 ).order_by('name')
-        free_apart = free_apart2.filter( a1 ).order_by('name')
+        # a6 = Q(equipment__icontains=equipment)
+        free_apart = free_apart2.filter( a1 & a2 & a3 & a4 & a5).order_by('name')
 
 
+        a7 = Q(rooms__name__in=selected_rooms)
+        if len(selected_rooms)>=1:
+            free_apart = free_apart2.filter( a1 & a2 & a3 & a4 & a5 & a7 ).order_by('name')
+        return render(request, 'home.html',{'freeaparts':free_apart,'rooms2':rooms,'main':True,'komm':''})
 
-        return render(request, 'home.html',{'freeaparts':free_apart,'rooms2':rooms,'main':True})
 
 
 class MessageView(View):

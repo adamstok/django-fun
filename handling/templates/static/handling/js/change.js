@@ -15,10 +15,11 @@ document.addEventListener('DOMContentLoaded',function (e) {
     text-info
     007bff
     */
-    normalsearch.style.width = '70%';
+    normalsearch.style.height = '20%';
 
     for(let x=0;x<inputs.length;x++){
         inputs[x].setAttribute('class',"form-control p-3 mb-2 bg-light text-dark");
+
         inputs[x].style.width = '600px';
         inputs[x].style.height = '50px';
     }
