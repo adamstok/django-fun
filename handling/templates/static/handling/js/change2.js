@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded',function (e) {
     selects = document.getElementsByTagName('select')
     textareas = document.getElementsByTagName('textarea')
     images = document.getElementsByTagName('img')
-    normalsearch = document.getElementById('right normalsearch')
+    normalsearch = document.getElementById('normalsearch')
     console.log(normalsearch)
     console.log('ok')
     /*
@@ -19,9 +19,7 @@ document.addEventListener('DOMContentLoaded',function (e) {
 
     for(let x=0;x<inputs.length;x++){
         inputs[x].setAttribute('class',"form-control p-3 mb-2 bg-light text-dark");
-
-        inputs[x].style.width = '600px';
-        inputs[x].style.height = '50px';
+        inputs[x].style.width = '500px'
     }
 
 
@@ -32,8 +30,7 @@ document.addEventListener('DOMContentLoaded',function (e) {
 
     for(let x=0;x<selects.length;x++){
         selects[x].setAttribute('class',"form-control form-control-lg  p-3 mb-2 bg-light text-dark");
-        selects[x].style.width = '600px';
-        selects[x].style.height = '50px';
+
     }
 
     for(let x=0;x<textareas.length;x++){

@@ -34,25 +34,25 @@
     {% block content %}
     {% endblock %}
 
-</body>
-{% else %}
+<style>
+#wrapper {
+  display: flex;
+}
+#left {
+  flex: 0 0 65%;
+}
+#right {
+  flex: 1;
+}
+</style>
 
-<ul class="nav nav-tabs">
-    <li role="presentation"><a href="{% url 'home' %}">Home</a></li>
-    <li role="presentation"><a href="{% url 'message' %}">Contact us</a></li>
-    <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
-</ul>
-
-    {% block normal %}
-    {% endblock %}
-
-
-
+<div id="wrapper">
 {% if freeaparts %}
+    <div id="left" style="width: 60%">
     <h3>Our Apartments: </h3>
     {% for ap in freeaparts %}
-        <div><a href="/apartments/torent/{{ ap.pk }}/">
-        <h2>{{ ap.name }}</h2>
+{#        <div id="left" style="width: 60%"><a href="{{ ap.get_detail_url }}">#}
+        <a href="{{ ap.get_detail_url }}"><h2>{{ ap.name }}</h2></a>
         <h4>{{ ap.description }}</h4>
         <h4>{{ ap.rent }}</h4>
         <h4>{{ ap.surface }}</h4>
@@ -67,12 +67,126 @@
                 <img src="{{ pi.pics.url }}">
                 {% endfor %}
             {% endif %}
-        </div>
-    {% endfor %}
-{% else %}
-        <h3>No free apartments available </h3>
-{% endif %}
 
+    {% endfor %}
+    </div>
+{% else %}
+    <div id="left">
+        <h3>No free apartments available </h3>
+    </div>
+{% endif %}
+<div id="right">
+
+</div>
+</div>
+
+</body>
+{% else %}
+
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="{% url 'home' %}">Home</a></li>
+    <li role="presentation"><a href="{% url 'message' %}">Contact us</a></li>
+    <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
+</ul>
+
+    {% block normal %}
+    {% endblock %}
+
+
+{% if main %}
+
+<style>
+#wrapper {
+  display: flex;
+}
+#left {
+  flex: 0 0 50%;
+}
+#right {
+  flex: 1;
+}
+</style>
+{{ komm }}
+<div id="wrapper">
+{% if freeaparts %}
+    <div id="left">
+    <h3>Our Apartments: </h3>
+    {% for ap in freeaparts %}
+{#        <div id="left" style="width: 60%"><a href="{{ ap.get_detail_url }}">#}
+        <a href="apartments/torent/{{ ap.pk }}/"><h2>{{ ap.name }}</h2></a>
+        <h4>{{ ap.description }}</h4>
+        <h4>{{ ap.rent }}</h4>
+        <h4>{{ ap.surface }}</h4>
+        <h4>{{ ap.equipment }}</h4>
+        {% if ap.rooms %}
+            {% for r in ap.rooms.all %}
+            <h4>{{ r.name }}</h4>
+            {% endfor %}
+        {% endif %}
+            {% if ap.apartmentspics_set.all %}
+                {% for pi in ap.apartmentspics_set.all %}
+                <img src="{{ pi.pics.url }}">
+                {% endfor %}
+            {% endif %}
+
+    {% endfor %}
+    </div>
+{% else %}
+    <div id="left">
+        <h3>No free apartments available </h3>
+    </div>
+{% endif %}
+<div id="right">
+{#class="form-group"#}
+{#class="form-horizontal"#}
+    <div  id="normalsearch" style="position: fixed; height: 10px">
+<form  method="GET" >
+  {% csrf_token %}
+    <p>
+    <label for="address">City:</label>
+    <input type="text" name="address" id="address">
+    </p>
+    <p>
+    <label for="surfacefrom">Surface from:</label>
+    <input type="number" step='0.01' name="surfacefrom" id="surfacefrom">
+    </p>
+    <p>
+    <label for="surfaceto">Surface to:</label>
+    <input type="number" step='0.01' name="surfaceto" id="surfaceto">
+    </p>
+    <p>
+    <label for="rentfrom">Rent from:</label>
+    <input type="number"  name="rentfrom" id="rentfrom">
+    </p>
+    <p>
+    <label for="rentto">Rent to:</label>
+    <input type="number"  name="rentto" id="rentto">
+    </p>
+{#    <p>#}
+{#    <label for="equipment">Equipment:</label>#}
+{#    <input type="text"  name="equipment" id="equipment">#}
+{#    </p>#}
+{#    <p>#}
+{#    <label for="rooms">Rooms:</label>#}
+{#    <div>#}
+{#        {% for room in rooms2 %}#}
+{#        <input type="checkbox" name="rooms" id="rooms" value="{{ room.name }}">#}
+{#        <label for="rooms">{{ room.name }}</label>#}
+{#        {% endfor %}#}
+{#    </div>#}
+{#    </p>#}
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Search</button>
+      </div>
+    </div>
+</form>
+</div>
+
+
+</div>
+</div>
+{% endif %}
 {% endif %}
 
 <p style="position: fixed; bottom: 5px ; text-align: right"> {{ now }}  {{ hour }} </p>

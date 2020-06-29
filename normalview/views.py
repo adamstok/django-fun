@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from handling.models import Apartments, ApartmentsPics,ApartmentsRooms
@@ -13,9 +14,41 @@ from django.views.generic import CreateView
 
 class NormalHome(View):
     def get(self,request):
-        free_apart = Apartments.objects.filter(renters__isnull=True)
-        return render(request, 'home.html',{'freeaparts':free_apart})
+        rooms = ApartmentsRooms.objects.all()
+        free_apart2 = Apartments.objects.filter(renters__isnull=True)
+        city = request.GET.get('address','')
+        surfacefrom = request.GET.get('surfacefrom','')
+        surfaceto = request.GET.get('surfaceto', '')
+        if surfacefrom == '':
+            surfacefrom = 0
+        if surfaceto == '':
+            surfaceto = 9999999
 
+        rentfrom = request.GET.get('rentfrom','')
+        rentto = request.GET.get('rentto','')
+        if rentfrom == '':
+            rentfrom = 0
+        if rentto == '':
+            rentto = 999999999
+
+        selected_rooms = request.GET.getlist('rooms')
+
+        a1 = Q(address__icontains=city)
+        a2 = Q(surface__gte=surfacefrom)
+        a3 = Q(surface__lte=surfaceto)
+        a4 = Q(rent__gte=rentfrom)
+        a5 = Q(rent__lte=rentto)
+        #a7 = Q(rooms__name__in=selected_rooms)
+        free_apart3 = free_apart2.filter(a1 & a2 & a3 & a4 & a5).order_by('name')
+        # if len(selected_rooms)>=1:
+        #     aproom = ApartmentsRooms.objects.filter(name__in=selected_rooms)
+        #     free_apart = free_apart3.filter(rooms__apartments__in=aproom).order_by('name')
+        #     return render(request, 'home.html',{'freeaparts': free_apart, 'rooms2': rooms, 'main': True, 'komm': aproom})
+        # else:
+        free_apart = free_apart3.all()
+        return render(request, 'home.html',{'freeaparts':free_apart,'rooms2':rooms,'main':True,'komm':''})
+
+#
 
 class MessageView(View):
     def get(self,request):
