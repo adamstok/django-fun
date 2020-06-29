@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded',function (e) {
     selects = document.getElementsByTagName('select')
     textareas = document.getElementsByTagName('textarea')
     images = document.getElementsByTagName('img')
-    normalsearch = document.getElementById('normalsearch')
-
+    normalsearch = document.getElementById('right normalsearch')
+    console.log(normalsearch)
+    console.log('ok')
     /*
     hrefs = document.getElementsByTagName('a')
     console.log(inputs)
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded',function (e) {
     text-info
     007bff
     */
-    normalsearch.style.width = '70 %';
+    normalsearch.style.width = '70%';
 
     for(let x=0;x<inputs.length;x++){
         inputs[x].setAttribute('class',"form-control p-3 mb-2 bg-light text-dark");

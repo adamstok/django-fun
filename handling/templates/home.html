@@ -113,7 +113,7 @@
     <h3>Our Apartments: </h3>
     {% for ap in freeaparts %}
 {#        <div id="left" style="width: 60%"><a href="{{ ap.get_detail_url }}">#}
-        <a href="{{ ap.get_detail_url }}"><h2>{{ ap.name }}</h2></a>
+        <a href="apartments/torent/{{ ap.pk }}/"><h2>{{ ap.name }}</h2></a>
         <h4>{{ ap.description }}</h4>
         <h4>{{ ap.rent }}</h4>
         <h4>{{ ap.surface }}</h4>
@@ -136,10 +136,10 @@
         <h3>No free apartments available </h3>
     </div>
 {% endif %}
-<div id="right">
+<div id="right normalsearch">
 
-    <div class="form-group" style="position: fixed">
-<form class="form-horizontal" method="GET" id="normalsearch">
+    <div class="form-group"  style="position: fixed">
+<form class="form-horizontal" method="GET" >
   {% csrf_token %}
     <p>
     <label for="address">City:</label>
