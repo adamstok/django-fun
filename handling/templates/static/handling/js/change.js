@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded',function (e) {
     selects = document.getElementsByTagName('select')
     textareas = document.getElementsByTagName('textarea')
     images = document.getElementsByTagName('img')
+    normalsearch = document.getElementById('normalsearch')
 
     /*
     hrefs = document.getElementsByTagName('a')
@@ -13,6 +14,8 @@ document.addEventListener('DOMContentLoaded',function (e) {
     text-info
     007bff
     */
+    normalsearch.style.width = '70 %';
+
     for(let x=0;x<inputs.length;x++){
         inputs[x].setAttribute('class',"form-control p-3 mb-2 bg-light text-dark");
         inputs[x].style.width = '600px';

@@ -76,7 +76,7 @@
     </div>
 {% endif %}
 <div id="right">
-    test hellow world
+
 </div>
 </div>
 
@@ -93,12 +93,27 @@
     {% endblock %}
 
 
+{% if main %}
 
+<style>
+#wrapper {
+  display: flex;
+}
+#left {
+  flex: 0 0 50%;
+}
+#right {
+  flex: 1;
+}
+</style>
+
+<div id="wrapper">
 {% if freeaparts %}
+    <div id="left">
     <h3>Our Apartments: </h3>
     {% for ap in freeaparts %}
-        <div><a href="/apartments/torent/{{ ap.pk }}/">
-        <h2>{{ ap.name }}</h2>
+{#        <div id="left" style="width: 60%"><a href="{{ ap.get_detail_url }}">#}
+        <a href="{{ ap.get_detail_url }}"><h2>{{ ap.name }}</h2></a>
         <h4>{{ ap.description }}</h4>
         <h4>{{ ap.rent }}</h4>
         <h4>{{ ap.surface }}</h4>
@@ -113,12 +128,64 @@
                 <img src="{{ pi.pics.url }}">
                 {% endfor %}
             {% endif %}
-        </div>
-    {% endfor %}
-{% else %}
-        <h3>No free apartments available </h3>
-{% endif %}
 
+    {% endfor %}
+    </div>
+{% else %}
+    <div id="left">
+        <h3>No free apartments available </h3>
+    </div>
+{% endif %}
+<div id="right">
+
+    <div class="form-group" style="position: fixed">
+<form class="form-horizontal" method="GET" id="normalsearch">
+  {% csrf_token %}
+    <p>
+    <label for="address">City:</label>
+    <input type="text" name="address" id="address">
+    </p>
+    <p>
+    <label for="surfacefrom">Surface from:</label>
+    <input type="number" step='0.01' name="surfacefrom" id="surfacefrom">
+    </p>
+    <p>
+    <label for="surfaceto">Surface to:</label>
+    <input type="number" step='0.01' name="surfaceto" id="surfaceto">
+    </p>
+    <p>
+    <label for="rentfrom">Rent from:</label>
+    <input type="number"  name="rentfrom" id="rentfrom">
+    </p>
+    <p>
+    <label for="rentto">Rent to:</label>
+    <input type="number"  name="rentto" id="rentto">
+    </p>
+    <p>
+    <label for="equipment">Equipment:</label>
+    <input type="text"  name="equipment" id="equipment">
+    </p>
+    <p>
+    <label for="rooms">Rooms:</label>
+    <div>
+        {% for room in rooms2 %}
+        <input type="checkbox" name="{{ room.pk }} " id="{{ room.pl }}">
+        <label for="{{ room.pk }}">{{ room.name }}</label>
+        {% endfor %}
+    </div>
+    </p>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Search</button>
+      </div>
+    </div>
+</form>
+</div>
+
+
+</div>
+</div>
+{% endif %}
 {% endif %}
 
 <p style="position: fixed; bottom: 5px ; text-align: right"> {{ now }}  {{ hour }} </p>
