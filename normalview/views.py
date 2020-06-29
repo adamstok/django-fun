@@ -31,26 +31,24 @@ class NormalHome(View):
         if rentto == '':
             rentto = 999999999
 
-        equipment = request.GET.get('equipment','')
         selected_rooms = request.GET.getlist('rooms')
-        #
-        # selected_rooms_queryset = ApartmentsRooms.objects.filter(pk__icontains=selected_rooms)
-        #
+
         a1 = Q(address__icontains=city)
         a2 = Q(surface__gte=surfacefrom)
         a3 = Q(surface__lte=surfaceto)
         a4 = Q(rent__gte=rentfrom)
         a5 = Q(rent__lte=rentto)
-        # a6 = Q(equipment__icontains=equipment)
-        free_apart = free_apart2.filter( a1 & a2 & a3 & a4 & a5).order_by('name')
-
-
-        a7 = Q(rooms__name__in=selected_rooms)
-        if len(selected_rooms)>=1:
-            free_apart = free_apart2.filter( a1 & a2 & a3 & a4 & a5 & a7 ).order_by('name')
+        #a7 = Q(rooms__name__in=selected_rooms)
+        free_apart3 = free_apart2.filter(a1 & a2 & a3 & a4 & a5).order_by('name')
+        # if len(selected_rooms)>=1:
+        #     aproom = ApartmentsRooms.objects.filter(name__in=selected_rooms)
+        #     free_apart = free_apart3.filter(rooms__apartments__in=aproom).order_by('name')
+        #     return render(request, 'home.html',{'freeaparts': free_apart, 'rooms2': rooms, 'main': True, 'komm': aproom})
+        # else:
+        free_apart = free_apart3.all()
         return render(request, 'home.html',{'freeaparts':free_apart,'rooms2':rooms,'main':True,'komm':''})
 
-
+#
 
 class MessageView(View):
     def get(self,request):
