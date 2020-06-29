@@ -34,11 +34,25 @@
     {% block content %}
     {% endblock %}
 
+<style>
+#wrapper {
+  display: flex;
+}
+#left {
+  flex: 0 0 65%;
+}
+#right {
+  flex: 1;
+}
+</style>
+
+<div id="wrapper">
 {% if freeaparts %}
+    <div id="left" style="width: 60%">
     <h3>Our Apartments: </h3>
     {% for ap in freeaparts %}
-        <div><a href="{{ ap.get_detail_url }}">
-        <h2>{{ ap.name }}</h2>
+{#        <div id="left" style="width: 60%"><a href="{{ ap.get_detail_url }}">#}
+        <a href="{{ ap.get_detail_url }}"><h2>{{ ap.name }}</h2></a>
         <h4>{{ ap.description }}</h4>
         <h4>{{ ap.rent }}</h4>
         <h4>{{ ap.surface }}</h4>
@@ -53,11 +67,18 @@
                 <img src="{{ pi.pics.url }}">
                 {% endfor %}
             {% endif %}
-        </div>
+
     {% endfor %}
+    </div>
 {% else %}
+    <div id="left">
         <h3>No free apartments available </h3>
+    </div>
 {% endif %}
+<div id="right">
+    test hellow world
+</div>
+</div>
 
 </body>
 {% else %}
