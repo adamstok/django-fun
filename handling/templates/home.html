@@ -53,10 +53,10 @@
     {% for ap in freeaparts %}
 {#        <div id="left" style="width: 60%"><a href="{{ ap.get_detail_url }}">#}
         <a href="{{ ap.get_detail_url }}"><h2>{{ ap.name }}</h2></a>
-        <h4>{{ ap.description }}</h4>
-        <h4>{{ ap.rent }}</h4>
-        <h4>{{ ap.surface }}</h4>
-        <h4>{{ ap.equipment }}</h4>
+        <h4>Description: {{ ap.description }}</h4>
+        <h4>Rent: {{ ap.rent }} zł</h4>
+        <h4>Surface: {{ ap.surface }}m</h4>
+        <h4>Equipment: {{ ap.equipment }}</h4>
         {% if ap.rooms %}
             {% for r in ap.rooms.all %}
             <h4>{{ r.name }}</h4>
@@ -115,9 +115,9 @@
 {#        <div id="left" style="width: 60%"><a href="{{ ap.get_detail_url }}">#}
         <a href="apartments/torent/{{ ap.pk }}/"><h2>{{ ap.name }}</h2></a>
         <h4>{{ ap.description }}</h4>
-        <h4>{{ ap.rent }}</h4>
-        <h4>{{ ap.surface }}</h4>
-        <h4>{{ ap.equipment }}</h4>
+        <h4>Rent: {{ ap.rent }} zł</h4>
+        <h4>Surface: {{ ap.surface }}m</h4>
+        <h4>Equipment: {{ ap.equipment }}</h4>
         {% if ap.rooms %}
             {% for r in ap.rooms.all %}
             <h4>{{ r.name }}</h4>
