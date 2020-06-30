@@ -5,6 +5,7 @@ from django.shortcuts import render
 from handling.forms import SearchForm,ImageUploadForm,ImageUploadForm1,ApartmentsRoomsForm,ApartmentsForm,CreatePaymentsForm
 from handling.models import ExamplePic,ApartmentsPics, ApartmentsRooms
 from normalview.models import Messages
+from PIL import Image
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -196,6 +197,7 @@ class UploadPic(LoginRequiredMixin,View):
         form = ImageUploadForm1(request.POST, request.FILES)
         if form.is_valid():
             pic = form.cleaned_data['image']
+            pic.size = (200,100)
             ap = form.cleaned_data['apartment']
             im1 = ApartmentsPics.objects.create(pics=pic,apartment=ap)
             im1.save()
