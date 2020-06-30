@@ -7,9 +7,15 @@ class SearchForm(forms.Form):
     query = forms.CharField(required=False)
 
 class ApartmentsForm(forms.ModelForm):
+    rooms = forms.ModelMultipleChoiceField(
+        queryset=ApartmentsRooms.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
     class Meta:
         model = Apartments
-        fields = "__all__"
+        fields = ['name','address','surface','rent','costs','equipment','description']
+
 
 class ImageUploadForm1(forms.Form):
     image = forms.ImageField()

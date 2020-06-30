@@ -22,16 +22,29 @@ class Home(LoginRequiredMixin, View):
 
 
 
-class CreateApartmentsView(LoginRequiredMixin,CreateView):
-    model = Apartments
-    template_name = 'obj_list.html'
-    success_url = reverse_lazy('apartments')
-    fields = ['name','address','surface','rent','costs','rooms','equipment','description']
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        #rented = Apartments.objects.filter(renters__isnull=False)
-        context.update({'objects':Apartments.objects.all()})
-        return context
+# class CreateApartmentsView(LoginRequiredMixin,CreateView):
+#     model = Apartments
+#     template_name = 'obj_list.html'
+#     success_url = reverse_lazy('apartments')
+#     fields = ['name','address','surface','rent','costs','rooms','equipment','description']
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         #rented = Apartments.objects.filter(renters__isnull=False)
+#         context.update({'objects':Apartments.objects.all()})
+#         return context
+#
+class CreateApartmentsView(LoginRequiredMixin,View):
+    def get(self,request):
+        form = ApartmentsForm
+        return render(request,'obj_list.html',{'form':form,'objects':Apartments.objects.all()})
+
+    def post(self,request):
+        form = ApartmentsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'obj_list.html', {'komunikat':'Apartment added.','form': form, 'objects': Apartments.objects.all()})
+        return render(request, 'obj_list.html',{'komunikat': 'Error', 'form': form, 'objects': Apartments.objects.all()})
+
 class ApartmentDetailView(LoginRequiredMixin,View):
     def get(self,request,pk):
         apartment = Apartments.objects.get(pk=pk)
