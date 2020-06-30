@@ -212,7 +212,7 @@ class UploadPic(LoginRequiredMixin,View):
         form = ImageUploadForm1(request.POST, request.FILES)
         if form.is_valid():
             pic = form.cleaned_data['image']
-            pic.size = (400,400,300,300)
+            pic.size = (300,300)
             ap = form.cleaned_data['apartment']
             im1 = ApartmentsPics.objects.create(pics=pic,apartment=ap)
             im1.save()

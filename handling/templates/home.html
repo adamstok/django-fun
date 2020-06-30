@@ -3,7 +3,7 @@
 <head>
 
     {% load static %}
-    <script src="{% static 'handling/js/change.js' %}"></script>
+    <script src="{% static 'handling/js/change2.js' %}"></script>
 
     <link rel="stylesheet" href="{% static 'handling/css/gallery.css' %}">
     <!-- Latest compiled and minified CSS -->
@@ -100,11 +100,12 @@
   display: flex;
 }
 #left {
-  flex: 0 0 50%;
+  flex: 0 0 70%;
 }
 #right {
-  flex: 1;
+    flex: 1;
 }
+
 </style>
 {{ komm }}
 <div id="wrapper">
@@ -125,7 +126,8 @@
         {% endif %}
             {% if ap.apartmentspics_set.all %}
                 {% for pi in ap.apartmentspics_set.all %}
-                <img src="{{ pi.pics.url }}">
+                    <img src="{{ pi.pics.url }}">
+
                 {% endfor %}
             {% endif %}
 

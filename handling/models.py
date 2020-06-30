@@ -1,9 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
-from smartfields import fields
-from smartfields.dependencies import FileDependency
-from smartfields.processors import ImageProcessor
+
 
 # Create your models here.
 
@@ -71,15 +69,11 @@ class Payments(models.Model):
 
 
 class ExamplePic(models.Model):
-    model_pic = fields.ImageField(upload_to='pic_folder/',default='pic_folder/None/no-img.jpg')
+    model_pic = models.ImageField(upload_to='pic_folder/',default='pic_folder/None/no-img.jpg')
 
 
 class ApartmentsPics(models.Model):
-    #pics = models.ImageField(upload_to='pic_folder/',default='pic_folder/None/no-img.jpg')
-    pics = fields.ImageField(upload_to='pic_folder/',default='pic_folder/None/no-img.jpg', dependencies = [
-        FileDependency(processor=ImageProcessor(
-            scale={'max_width': 300, 'max_height': 300}))
-    ])
+    pics = models.ImageField(upload_to='pic_folder/',default='pic_folder/None/no-img.jpg')
     apartment = models.ForeignKey(Apartments,on_delete=models.CASCADE)
     def get_delete(self):
         return f'/pictures/delete/{self.id}/'

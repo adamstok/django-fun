@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded',function (e) {
     textareas = document.getElementsByTagName('textarea')
     images = document.getElementsByTagName('img')
 
-    
+    console.log(images)
 
     /*
     hrefs = document.getElementsByTagName('a')
@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded',function (e) {
 
     for(let x=0;x<images.length;x++){
         images[x].setAttribute('class',"img-rounded ");
+        images[x].setAttribute('width',400)
+        images[x].setAttribute('height',300)
     }
 
 
