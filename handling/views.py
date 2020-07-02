@@ -83,7 +83,7 @@ class CreateRentersView(LoginRequiredMixin,CreateView):
     fields = ['first_name','last_name','apartment']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({'objects':Renters.objects.all()})
+        context.update({'objects':Renters.objects.all(),'komunikat':'Renter added'})
         return context
 class RenterDetailView(LoginRequiredMixin,View):
     def get(self,request,pk):
