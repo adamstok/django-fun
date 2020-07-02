@@ -1,5 +1,4 @@
 from datetime import datetime,timedelta
-import pytz
 
 def show_time(request):
     now = datetime.now()

@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -36,12 +35,9 @@ class Apartments(models.Model):
         return f'/apartments/delete/{self.id}/'
 
 
-
-
 class Renters(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    #apartment = models.ForeignKey(Apartments,on_delete=models.CASCADE)
     apartment = models.OneToOneField(Apartments, on_delete=models.CASCADE)
     def __str__(self):
         return f'First name: {self.first_name} ; Last name: {self.last_name} '#; Apartment: {self.apartment}'
