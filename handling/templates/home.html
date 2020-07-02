@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     {% load static %}
     <script src="{% static 'handling/js/change.js' %}"></script>
-
     <link rel="stylesheet" href="{% static 'handling/css/gallery.css' %}">
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <!-- Optional theme -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
-
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="60" />
     <title>Home</title>
 </head>
+
+
+
 {% if user.is_authenticated %}
 <body>
+
+<style>
+#wrapper {
+  display: flex;
+}
+#left {
+  flex: 0 0 65%;
+}
+#right {
+  flex: 1;
+}
+</style>
+
 
 <ul class="nav nav-tabs">
   <li role="presentation" class="active"><a href="/">Home</a></li>
@@ -34,30 +45,20 @@
     {% block content %}
     {% endblock %}
 
-<style>
-#wrapper {
-  display: flex;
-}
-#left {
-  flex: 0 0 65%;
-}
-#right {
-  flex: 1;
-}
-</style>
+
 
 <div id="wrapper">
 {% if freeaparts %}
     <div id="left" style="width: 60%">
     <h3>Our Apartments: </h3>
     {% for ap in freeaparts %}
-{#        <div id="left" style="width: 60%"><a href="{{ ap.get_detail_url }}">#}
         <a href="{{ ap.get_detail_url }}"><h2>{{ ap.name }}</h2></a>
         <h4>{{ ap.description }}</h4>
-        <h4>{{ ap.rent }}</h4>
-        <h4>{{ ap.surface }}</h4>
-        <h4>{{ ap.equipment }}</h4>
+        <h4>Rent: {{ ap.rent }} pln</h4>
+        <h4>Surface: {{ ap.surface }} m</h4>
+        <h4>Equipment: {{ ap.equipment }}</h4>
         {% if ap.rooms %}
+            <h4>Rooms: </h4>
             {% for r in ap.rooms.all %}
             <h4>{{ r.name }}</h4>
             {% endfor %}
@@ -76,24 +77,14 @@
     </div>
 {% endif %}
 <div id="right">
-
 </div>
 </div>
-
 </body>
+
+
+
+
 {% else %}
-
-<ul class="nav nav-tabs">
-    <li role="presentation"><a href="{% url 'home' %}">Home</a></li>
-    <li role="presentation"><a href="{% url 'message' %}">Contact us</a></li>
-    <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
-</ul>
-
-    {% block normal %}
-    {% endblock %}
-
-
-{% if main %}
 
 <style>
 #wrapper {
@@ -106,19 +97,33 @@
   flex: 1;
 }
 </style>
+
+
+
+<ul class="nav nav-tabs">
+    <li role="presentation"><a href="{% url 'home' %}">Home</a></li>
+    <li role="presentation"><a href="{% url 'message' %}">Contact us</a></li>
+    <li role="presentation"><a href="{% url 'login' %}">Login</a></li>
+</ul>
+
+    {% block normal %}
+    {% endblock %}
+
+
+{% if main %}
 {{ komm }}
 <div id="wrapper">
 {% if freeaparts %}
     <div id="left">
     <h3>Our Apartments: </h3>
     {% for ap in freeaparts %}
-{#        <div id="left" style="width: 60%"><a href="{{ ap.get_detail_url }}">#}
         <a href="apartments/torent/{{ ap.pk }}/"><h2>{{ ap.name }}</h2></a>
         <h4>{{ ap.description }}</h4>
-        <h4>{{ ap.rent }}</h4>
-        <h4>{{ ap.surface }}</h4>
-        <h4>{{ ap.equipment }}</h4>
+        <h4>Rent: {{ ap.rent }} pln</h4>
+        <h4>Surface: {{ ap.surface }} m</h4>
+        <h4>Equipment: {{ ap.equipment }}</h4>
         {% if ap.rooms %}
+            <h4>Rooms: </h4>
             {% for r in ap.rooms.all %}
             <h4>{{ r.name }}</h4>
             {% endfor %}
@@ -137,9 +142,7 @@
     </div>
 {% endif %}
 <div id="right">
-{#class="form-group"#}
-{#class="form-horizontal"#}
-    <div  id="normalsearch" style="position: fixed; height: 10px">
+<div  id="normalsearch" style="position: fixed; height: 10px">
 <form  method="GET" >
   {% csrf_token %}
     <p>
@@ -162,19 +165,6 @@
     <label for="rentto">Rent to:</label>
     <input type="number"  name="rentto" id="rentto">
     </p>
-{#    <p>#}
-{#    <label for="equipment">Equipment:</label>#}
-{#    <input type="text"  name="equipment" id="equipment">#}
-{#    </p>#}
-{#    <p>#}
-{#    <label for="rooms">Rooms:</label>#}
-{#    <div>#}
-{#        {% for room in rooms2 %}#}
-{#        <input type="checkbox" name="rooms" id="rooms" value="{{ room.name }}">#}
-{#        <label for="rooms">{{ room.name }}</label>#}
-{#        {% endfor %}#}
-{#    </div>#}
-{#    </p>#}
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-default">Search</button>
