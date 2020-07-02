@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded',function (e) {
     selects = document.getElementsByTagName('select')
     textareas = document.getElementsByTagName('textarea')
     images = document.getElementsByTagName('img')
-    normalsearch = document.getElementById('right normalsearch')
-    console.log(normalsearch)
-    console.log('ok')
+
+    console.log(images)
+
     /*
     hrefs = document.getElementsByTagName('a')
     console.log(inputs)
@@ -15,7 +15,10 @@ document.addEventListener('DOMContentLoaded',function (e) {
     text-info
     007bff
     */
-    normalsearch.style.height = '20%';
+/*
+    for(let x=0;x<feature.children.length;x++){
+        feature.children[x].style.height = '20px'
+    }*/
 
     for(let x=0;x<inputs.length;x++){
         inputs[x].setAttribute('class',"form-control p-3 mb-2 bg-light text-dark");
@@ -36,6 +39,8 @@ document.addEventListener('DOMContentLoaded',function (e) {
         selects[x].style.height = '50px';
     }
 
+    
+    
     for(let x=0;x<textareas.length;x++){
         textareas[x].setAttribute('class',"form-control p-3 mb-2 bg-light text-dark");
         textareas[x].setAttribute('rows',"3");
@@ -44,6 +49,8 @@ document.addEventListener('DOMContentLoaded',function (e) {
 
     for(let x=0;x<images.length;x++){
         images[x].setAttribute('class',"img-rounded ");
+        images[x].setAttribute('width',400)
+        images[x].setAttribute('height',300)
     }
 
 

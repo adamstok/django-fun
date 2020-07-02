@@ -1,15 +1,13 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.db.models import Q
 from django.shortcuts import render
-from django.urls import reverse_lazy
 from handling.models import Apartments, ApartmentsPics,ApartmentsRooms
-
 from normalview.models import Messages
 from normalview.forms import MessagesForm
 
 # Create your views here.
 from django.views import View
-from django.views.generic import CreateView
+
 
 
 class NormalHome(View):
@@ -30,9 +28,7 @@ class NormalHome(View):
             rentfrom = 0
         if rentto == '':
             rentto = 999999999
-
         selected_rooms = request.GET.getlist('rooms')
-
         a1 = Q(address__icontains=city)
         a2 = Q(surface__gte=surfacefrom)
         a3 = Q(surface__lte=surfaceto)
@@ -40,11 +36,6 @@ class NormalHome(View):
         a5 = Q(rent__lte=rentto)
         #a7 = Q(rooms__name__in=selected_rooms)
         free_apart3 = free_apart2.filter(a1 & a2 & a3 & a4 & a5).order_by('name')
-        # if len(selected_rooms)>=1:
-        #     aproom = ApartmentsRooms.objects.filter(name__in=selected_rooms)
-        #     free_apart = free_apart3.filter(rooms__apartments__in=aproom).order_by('name')
-        #     return render(request, 'home.html',{'freeaparts': free_apart, 'rooms2': rooms, 'main': True, 'komm': aproom})
-        # else:
         free_apart = free_apart3.all()
         return render(request, 'home.html',{'freeaparts':free_apart,'rooms2':rooms,'main':True,'komm':''})
 
